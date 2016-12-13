@@ -19,7 +19,18 @@ exports.sendWelcome = function(userPhoneNumber) {
     }
   });
 };
-
+//==========notify the buddy about their friend setting a goal===========//
+exports.notifyBuddy = function(buddyPhoneNumber, userName, userGoal) {
+  twilio.sendMessage({
+    to: `+1${buddyPhoneNumber}`,
+    from: Keys.twilio.TWILIO_NUMBER,
+    body: `Your buddy ${userName} just signed up for Hassle with this goal: ${userGoal}. If they get off track, we'll start hassling you.`
+  }, function(err, responseData) {
+    if(!err) {
+      console.log(responseData.body);
+    }
+  });
+};
 
 //=========== outbound period question service ====================//
 
@@ -135,51 +146,54 @@ exports.responseMaker = function(req, res) {
 
 };
 
+////////////////////////////////////////////////////////
+//////////Disregard the rest (for testing)//////////////
+////////////////////////////////////////////////////////
 
 
-//=========== get last inbound response not tied to user ====================//
+// //=========== get last inbound response not tied to user ====================//
 
 
-exports.getLastResponse = function() {
+// exports.getLastResponse = function() {
 
-  var lastResponse;
+//   var lastResponse;
 
-  var promise = new Promise(function(resolve, reject) {
+//   var promise = new Promise(function(resolve, reject) {
 
-    twilio.messages.list(function(err, data) {
-      lastResponse = data.messages[1].body;
-      //go to db
-      resolve(data); //fance promise
-    });
-    return promise;
-  })
-  .then(function(data) {
-    if (lastResponse === "1") {
-      twilio.sendMessage({
-        to: `+1${6468318760}`, // Any number Twilio can deliver to
-        from: '+14152003022', // A number you bought from Twilio and can use for outbound communication
-        body: `you must be very proud of yourself` // body of the SMS message
-      }, function(err, responseData) { //this function is executed when a response is received from Twilio
-        if (!err) { // "err" is an error received during the request, if any
-        }
-      });
+//     twilio.messages.list(function(err, data) {
+//       lastResponse = data.messages[1].body;
+//       //go to db
+//       resolve(data); //fance promise
+//     });
+//     return promise;
+//   })
+//   .then(function(data) {
+//     if (lastResponse === "1") {
+//       twilio.sendMessage({
+//         to: `+1${6468318760}`, // Any number Twilio can deliver to
+//         from: Keys.twilio.TWILIO_NUMBER, // A number you bought from Twilio and can use for outbound communication
+//         body: `you must be very proud of yourself` // body of the SMS message
+//       }, function(err, responseData) { //this function is executed when a response is received from Twilio
+//         if (!err) { // "err" is an error received during the request, if any
+//         }
+//       });
 
-    }
+//     }
 
-    if (lastResponse === "2") {
-      twilio.sendMessage({
-        to: `+1${6468318760}`, // Any number Twilio can deliver to
-        from: '+14152003022', // A number you bought from Twilio and can use for outbound communication
-        body: `wow you suck at this` // body of the SMS message
-      }, function(err, responseData) { //this function is executed when a response is received from Twilio
-        if (!err) { // "err" is an error received during the request, if any
-          console.log(responseData.body); // outputs "word to your mother."
-        }
-      });
-    }
-  });
+//     if (lastResponse === "2") {
+//       twilio.sendMessage({
+//         to: `+1${6468318760}`, // Any number Twilio can deliver to
+//         from: Keys.twilio.TWILIO_NUMBER, // A number you bought from Twilio and can use for outbound communication
+//         body: `wow you suck at this` // body of the SMS message
+//       }, function(err, responseData) { //this function is executed when a response is received from Twilio
+//         if (!err) { // "err" is an error received during the request, if any
+//           console.log(responseData.body); // outputs "word to your mother."
+//         }
+//       });
+//     }
+//   });
 
-};
+// };
 
 
 //=========== get all message history for testing ====================//

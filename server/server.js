@@ -89,6 +89,7 @@ app.post('/create', function(req, res) {
 
     user.save((err, updatedUser) => err ? res.send(err) : res.send(updatedUser));
     twilioService.sendWelcome(user.phoneNumber);
+    twilioService.notifyBuddy(user.buddyPhone, user.name, user.goal);
   });
 });
 
