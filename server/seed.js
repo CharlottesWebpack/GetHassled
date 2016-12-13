@@ -1,12 +1,13 @@
 const MongoClient = require('mongodb').MongoClient;
 const mongoose = require('mongoose');
+const DB = require('./dbConfig.js');
 const fs = require('fs');
-const url = 'mongodb://bartek:hassle1@ds119598.mlab.com:19598/heroku_4800qm90';
+const url = process.env.DB_PATH || DB.path;
 const db = mongoose.connect(url).connection;
 const User = require('./userModel.js');
 
 // Step 1: Drop old data
-MongoClient.connect(url, (err, db) => db.command({ 
+MongoClient.connect(url, (err, db) => db.command({
   'dropDatabase': 1
 }));
 

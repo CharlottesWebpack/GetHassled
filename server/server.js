@@ -10,7 +10,8 @@ var app = express();
 // configure database
 var morgan = require('morgan');
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://bartek:hassle1@ds119598.mlab.com:19598/heroku_4800qm90');
+const DB = require('./dbConfig.js');
+mongoose.connect(process.env.DB_PATH || DB.path);
 var db = mongoose.connection;
 var User = require('./userModel.js');
 
