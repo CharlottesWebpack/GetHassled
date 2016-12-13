@@ -1,5 +1,5 @@
 *.log
 node_modules/
 bower_components/
-dbConfig.js
-keys.js
+server/dbConfig.js
+server/keys.js
