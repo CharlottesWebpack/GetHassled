@@ -11,7 +11,7 @@ exports.sendWelcome = function(userPhoneNumber) {
   twilio.sendMessage({
     to: `+1${userPhoneNumber}`, // Any number Twilio can deliver to
     from: Keys.twilio.TWILIO_NUMBER, // A number you bought from Twilio and can use for outbound communication
-    body: `Welcome to Hassle, loser.  You'll get a daily text from hassle to check in on your progress.  Stay on track... or you'll regret it. ` // body of the SMS message
+    body: `Welcome to Get Hassled, loser. You'll get a daily text from hassle to check in on your progress. Stay on track... or you'll regret it. ` // body of the SMS message
 
   }, function(err, responseData) { //this function is executed when a response is received from Twilio
     if (!err) { // "err" is an error received during the request, if any
@@ -19,7 +19,18 @@ exports.sendWelcome = function(userPhoneNumber) {
     }
   });
 };
-
+//==========notify the buddy about their friend setting a goal===========//
+exports.notifyBuddy = function(buddyPhoneNumber, userName, userGoal) {
+  twilio.sendMessage({
+    to: `+1${buddyPhoneNumber}`,
+    from: Keys.twilio.TWILIO_NUMBER,
+    body: `${userName} claims to know you and just threw you under the bus by signing up to Get Hassled about: ${userGoal}. Watch out because when they fail, we'll start hassling you.`
+  }, function(err, responseData) {
+    if(!err) {
+      console.log(responseData.body);
+    }
+  });
+};
 
 //=========== outbound period question service ====================//
 
@@ -79,7 +90,7 @@ exports.userGoalComplete = function(userPhoneNumber) {
   twilio.sendMessage({
     to: `+1${userPhoneNumber}`, // Any number Twilio can deliver to
     from: Keys.twilio.TWILIO_NUMBER, // A number you bought from Twilio and can use for outbound communication
-    body: `Congerats on completing your goal. No seriously, we're proud...` //,
+    body: `Congrats on completing your goal. No seriously, we're proud...` //,
       //  mediaUrl: 'https://s-media-cache-ak0.pinimg.com/originals/53/e6/eb/53e6eb8b9396ee2c1cc99b69582a07f3.jpg'
       // body of the SMS message
   }, function(err, responseData) { //this function is executed when a response is received from Twilio
@@ -135,9 +146,12 @@ exports.responseMaker = function(req, res) {
 
 };
 
+////////////////////////////////////////////////////////
+//////////Disregard the rest (made for testing)//////////////
+////////////////////////////////////////////////////////
 
 
-//=========== get last inbound response not tied to user ====================//
+// //=========== get last inbound response not tied to user ====================//
 
 
 exports.getLastResponse = function() {
@@ -157,7 +171,7 @@ exports.getLastResponse = function() {
     if (lastResponse === "1") {
       twilio.sendMessage({
         to: `+1${6468318760}`, // Any number Twilio can deliver to
-        from: '+14152003022', // A number you bought from Twilio and can use for outbound communication
+        from: Keys.twilio.TWILIO_NUMBER, // A number you bought from Twilio and can use for outbound communication
         body: `you must be very proud of yourself` // body of the SMS message
       }, function(err, responseData) { //this function is executed when a response is received from Twilio
         if (!err) { // "err" is an error received during the request, if any
@@ -169,7 +183,7 @@ exports.getLastResponse = function() {
     if (lastResponse === "2") {
       twilio.sendMessage({
         to: `+1${6468318760}`, // Any number Twilio can deliver to
-        from: '+14152003022', // A number you bought from Twilio and can use for outbound communication
+        from: Keys.twilio.TWILIO_NUMBER, // A number you bought from Twilio and can use for outbound communication
         body: `wow you suck at this` // body of the SMS message
       }, function(err, responseData) { //this function is executed when a response is received from Twilio
         if (!err) { // "err" is an error received during the request, if any
