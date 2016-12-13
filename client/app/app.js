@@ -1,7 +1,7 @@
 angular.module('app', [
 	'app.service',
 	'app.create',
-    'app.finish',
+  'app.finish',
 	'app.status',
 	'ngRoute'
 	])
