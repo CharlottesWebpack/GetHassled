@@ -38,7 +38,7 @@ exports.negativeResponses = [
   `Does your shit celebrate when it's getting flushed to get away from you?...💩`,
   `I just sharted in my console.💩💩💩`,
   `You will die alone in a home when your family disowns you.💩💩💩`,
-  `You worthless of shit even suck at failing...`,
+  `You worthless of shit, you even suck at failing...`,
   `It's prob time you look at yourself in the mirror and admit you suck😞`,
   `You smell better than you look...or is it the otherway around?👃`,
   `Give up time...⏱`,
