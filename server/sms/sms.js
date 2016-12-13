@@ -10,7 +10,7 @@ exports.sendWelcome = function(userPhoneNumber) {
 
   twilio.sendMessage({
     to: `+1${userPhoneNumber}`, // Any number Twilio can deliver to
-    from: '+14152003022', // A number you bought from Twilio and can use for outbound communication
+    from: Keys.twilio.TWILIO_NUMBER, // A number you bought from Twilio and can use for outbound communication
     body: `Welcome to Hassle, loser.  You'll get a daily text from hassle to check in on your progress.  Stay on track... or you'll regret it. ` // body of the SMS message
 
   }, function(err, responseData) { //this function is executed when a response is received from Twilio
@@ -26,7 +26,7 @@ exports.sendWelcome = function(userPhoneNumber) {
 exports.periodicGoalPoll = function(userPhoneNumber, userGoal) {
   twilio.sendMessage({
     to: `+1${userPhoneNumber}`, // Any number Twilio can deliver to
-    from: '+14152003022', // A number you bought from Twilio and can use for outbound communication
+    from: Keys.twilio.TWILIO_NUMBER, // A number you bought from Twilio and can use for outbound communication
     body: `Did you make progress towards your goal? ## ${userGoal} ## Respond 1 for 'yes' -or- 2 for 'no'.` //,
       //  mediaUrl: 'https://s-media-cache-ak0.pinimg.com/originals/53/e6/eb/53e6eb8b9396ee2c1cc99b69582a07f3.jpg'
       // body of the SMS message
@@ -44,7 +44,7 @@ exports.periodicGoalPoll = function(userPhoneNumber, userGoal) {
 exports.harassUser = function(userPhoneNumber) {
   twilio.sendMessage({
     to: `+1${userPhoneNumber}`, // Any number Twilio can deliver to
-    from: '+14152003022', // A number you bought from Twilio and can use for outbound communication
+    from: Keys.twilio.TWILIO_NUMBER, // A number you bought from Twilio and can use for outbound communication
     body: `You're falling behind on your goal. Get back on track to stop sucking and end these messages.` //,
       //  mediaUrl: 'https://s-media-cache-ak0.pinimg.com/originals/53/e6/eb/53e6eb8b9396ee2c1cc99b69582a07f3.jpg'
       // body of the SMS message
@@ -61,7 +61,7 @@ exports.harassUser = function(userPhoneNumber) {
 exports.harassBuddy = function(buddyPhone) {
   twilio.sendMessage({
     to: `+1${buddyPhone}`, // Any number Twilio can deliver to
-    from: '+14152003022', // A number you bought from Twilio and can use for outbound communication
+    from: Keys.twilio.TWILIO_NUMBER, // A number you bought from Twilio and can use for outbound communication
     body: `You're getting annoyed bc your buddy is falling behind on their goal.` //,
       //  mediaUrl: 'https://s-media-cache-ak0.pinimg.com/originals/53/e6/eb/53e6eb8b9396ee2c1cc99b69582a07f3.jpg'
       // body of the SMS message
@@ -78,7 +78,7 @@ exports.userGoalComplete = function(userPhoneNumber) {
   console.log('inside usergoal complete');
   twilio.sendMessage({
     to: `+1${userPhoneNumber}`, // Any number Twilio can deliver to
-    from: '+14152003022', // A number you bought from Twilio and can use for outbound communication
+    from: Keys.twilio.TWILIO_NUMBER, // A number you bought from Twilio and can use for outbound communication
     body: `Congerats on completing your goal. No seriously, we're proud...` //,
       //  mediaUrl: 'https://s-media-cache-ak0.pinimg.com/originals/53/e6/eb/53e6eb8b9396ee2c1cc99b69582a07f3.jpg'
       // body of the SMS message
@@ -95,7 +95,7 @@ exports.buddyGoalComplete = function(buddyPhone) {
     console.log('inside buddy goal complete');
   twilio.sendMessage({
     to: `+1${buddyPhone}`, // Any number Twilio can deliver to
-    from: '+14152003022', // A number you bought from Twilio and can use for outbound communication
+    from: Keys.twilio.TWILIO_NUMBER, // A number you bought from Twilio and can use for outbound communication
     body: `Your buddy recently completed their goal. If they're lying, are they a friend worth keeping?` //,
       //  mediaUrl: 'https://s-media-cache-ak0.pinimg.com/originals/53/e6/eb/53e6eb8b9396ee2c1cc99b69582a07f3.jpg'
       // body of the SMS message
