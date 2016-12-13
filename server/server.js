@@ -11,7 +11,7 @@ var app = express();
 var morgan = require('morgan');
 var mongoose = require('mongoose');
 const DB = require('./dbConfig.js');
-mongoose.connect(process.env.DB_PATH || DB.path);
+mongoose.connect( process.env.DB_PATH || DB.path);
 var db = mongoose.connection;
 var User = require('./userModel.js');
 
@@ -197,5 +197,8 @@ function grade(user) {
 }
 
 // start server
-app.listen(port);
-console.log('Listening on port ' + port + '...');
+db.once('open', function (){
+  console.log('mongo connection established');
+  app.listen(port);
+  console.log('Listening on port ' + port + '...');
+})
