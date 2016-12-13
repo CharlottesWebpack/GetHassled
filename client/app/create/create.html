@@ -7,7 +7,11 @@
     <h3>your info <small>(required)</small></h3>
     <hr />
     <form name="goalForm" ng-submit="addUser()" novalidate>
-
+    <div>
+         <span class="glyphicon glyphicon-user"></span><strong>Choose User type</strong><br><br>
+          <input type="radio" name="mode" value="Regular"> Regular<br><br>
+          <input type="radio" name="mode" value="sensitive"> Sensitive<br><br>
+    </div>
       <!--  GOAL -->
       <div class="form-group row">
         <label for="example-text-input" class="col-xs-4 col-form-label">* What do you want to accomplish?</label>
