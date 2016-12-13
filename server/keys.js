@@ -1,7 +1,7 @@
 module.exports = {
     'facebook': {
-        'clientID': '1020549974735073',
-        'clientSecret': 'e57b9fddc935f1564464fddb7b33e788',
+        'clientID': '1738452879814619',
+        'clientSecret': 'b61fff0666bd590494259b403c39184b',
         //'callbackURL': 'https://peaceful-caverns-27176.herokuapp.com/auth/facebook/callback'
         'callbackURL': 'http://localhost:8000/auth/facebook/callback'
     },
