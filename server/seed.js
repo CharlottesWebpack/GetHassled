@@ -1,8 +1,8 @@
 const MongoClient = require('mongodb').MongoClient;
 const mongoose = require('mongoose');
-const db = require('./dbConfig.js');
+const DB = require('./dbConfig.js');
 const fs = require('fs');
-const url = process.env.DB_PATH || db.path;
+const url = process.env.DB_PATH || DB.path;
 const db = mongoose.connect(url).connection;
 const User = require('./userModel.js');
 

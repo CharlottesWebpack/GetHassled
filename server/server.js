@@ -10,8 +10,8 @@ var app = express();
 // configure database
 var morgan = require('morgan');
 var mongoose = require('mongoose');
-const db = require('./dbConfig.js');
-mongoose.connect(process.env.DB_PATH || db.path);
+const DB = require('./dbConfig.js');
+mongoose.connect(process.env.DB_PATH || DB.path);
 var db = mongoose.connection;
 var User = require('./userModel.js');
 
