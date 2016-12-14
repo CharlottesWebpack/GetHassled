@@ -3,9 +3,13 @@ angular.module("app.status", [])
 .controller("statusController", function($scope, $http, $location) {
   $scope.user = {};
   $scope.finished = false;
-  $scope.finish = function() {
+  $scope.areYouDone = function() {
     $scope.finished = !$scope.finished;
-  }
+  };
+  $scope.finishGoal = function() {
+    $http.post('/finish')
+      .success((user) => $location.path('/finish'));
+  };
 
   $http.get('/user')
     .success((user) => {
