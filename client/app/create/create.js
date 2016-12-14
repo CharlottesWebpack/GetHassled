@@ -10,13 +10,6 @@ angular.module("app.create", [])
     createFactory.add($scope.user)
       .then(() => $location.path('/status'));
   };
-
-	$scope.getBuddies = function() {
-		$http({
-			method: 'GET',
-			url: '/buddies'
-		});
-	};
 })
 .directive('phoneInput', function($filter, $browser) {
     return {
