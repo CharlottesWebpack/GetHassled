@@ -1,4 +1,4 @@
-angular.module('app.buddies', [])
+angular.module("app.buddies", [])
 .controller('buddiesController', function($scope, $http) {
   $http({
     method: 'GET',
