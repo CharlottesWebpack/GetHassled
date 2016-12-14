@@ -18,12 +18,12 @@
       </table>
 
       <div ng-if="!finished">
-        <button ng-click="finish()" type="button" class="btn">I'm finished!</button>
+        <button ng-click="areYouDone()" type="button" class="btn">I'm finished!</button>
       </div>
       <div ng-if="finished">
         <p>Are you really finished?  If you lie to us we will find out and come to your house and take a dump on the porch...</p>
-        <a href="#/finish"><button type="button" class="btn btn-danger">Seriously, I'm done.</button></a>
-        <button ng-click="finish()" type="button" class="btn">Ok, wait! Please don't do that...</button>
+        <button ng-click="finishGoal()" type="button" class="btn btn-danger">Seriously, I'm done.</button>
+        <button ng-click="areYouDone()" type="button" class="btn">Ok, wait! Please don't do that...</button>
       </div>
 
     </div>
