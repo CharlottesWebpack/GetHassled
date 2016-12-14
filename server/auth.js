@@ -25,9 +25,9 @@ module.exports = function(passport) {
 
   // pull in our info from keys.js
   passport.use(new FacebookStrategy({
-    clientID: Keys.facebook.clientID,
-    clientSecret: Keys.facebook.clientSecret,
-    callbackURL: Keys.facebook.callbackURL
+    clientID: process.env.CLIENT_ID || Keys.facebook.clientID,
+    clientSecret: process.env.CLIENT_SECRET || Keys.facebook.clientSecret,
+    callbackURL: process.env.CALLBACK_URL || Keys.facebook.callbackURL
   },
   // facebook will send back the token and profile info
   function(token, refreshToken, profile, done) {
