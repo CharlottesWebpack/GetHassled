@@ -7,10 +7,13 @@
     <h3>your info <small>(required)</small></h3>
     <hr />
     <form name="goalForm" ng-submit="addUser()" novalidate>
-    <div>
-         <span class="glyphicon glyphicon-user"></span><strong>Choose User type</strong><br><br>
-          <input type="radio" name="mode" value="Regular"> Regular<br><br>
-          <input type="radio" name="mode" value="sensitive"> Sensitive<br><br>
+    <!-- USER TYPE -->
+    <div class="form-group row">
+      <label class="col-xs-4 col-form-label"><span class="glyphicon glyphicon-user"></span>Choose user type</label>
+      <div class="col-xs-8">
+        <input type="radio" name="mode" value="regular"> Regular<br><br>
+        <input type="radio" name="mode" value="sensitive"> Sensitive<br><br>
+      </div>
     </div>
       <!--  GOAL -->
       <div class="form-group row">
