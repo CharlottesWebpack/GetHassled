@@ -84,6 +84,7 @@ app.post('/create', function(req, res) {
     user.grade = 100;
     user.harassUser = false;
     user.harassBuddy = false;
+    user.frequencyOfTexts = req.body.
 
     user.save()
     .then((updatedUser) => {
