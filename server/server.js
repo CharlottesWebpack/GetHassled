@@ -11,9 +11,10 @@ var app = express();
 var morgan = require('morgan');
 var mongoose = require('mongoose');
 const DB = require('./dbConfig.js');
-mongoose.connect(process.env.DB_PATH || DB.path);
+mongoose.connect( process.env.DB_PATH || DB.path);
 var db = mongoose.connection;
 var User = require('./userModel.js');
+mongoose.Promise = global.Promise; // use native JS promises
 
 // log every request to the console
 app.use(morgan('dev'));
@@ -74,10 +75,8 @@ app.get('/user', function(req, res) {
 
 // new user route
 app.post('/create', function(req, res) {
-  //console.log(req);
-
-  User.findById(req.body._id, function(err, user) {
-    console.log('user', user);
+  console.log(req.body)
+  User.findById(req.body._id, function(err, user) { //find the user and create or update his goal and other info
     user.goal = req.body.goal;
     user.phoneNumber = req.body.phoneNumber;
     user.buddyName = req.body.buddyName;
@@ -86,15 +85,38 @@ app.post('/create', function(req, res) {
     user.grade = 100;
     user.harassUser = false;
     user.harassBuddy = false;
+    user.frequencyOfTexts = req.body.frequencyOfTexts.value;
 
-    user.save((err, updatedUser) => err ? res.send(err) : res.send(updatedUser));
+    user.save()
+    .then((updatedUser) => {
+      res.send(updatedUser);
+      return updatedUser;
+    })
+    .then((updatedUser) => {
+      User.findOne({phoneNumber: user.buddyPhone}, function (err, buddy) { //find the buddy in db, add the user to buddy's friends array
+        if (err) {console.error(err);}
+        else {
+          if (buddy.friends) {
+            buddy.friends.push(updatedUser);
+          } else {
+            buddy.friends = [updatedUser];
+          }
+          buddy.save();
+        }
+      });
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+
     twilioService.sendWelcome(user.phoneNumber);
+    twilioService.notifyBuddy(user.buddyPhone, user.name, user.goal);
   });
+
 });
 
 // goal completion routes
 app.post('/finish', function(req, res) {
-  console.log('finishing...');
   User.findById(req.user._id, function(err, user) {
     console.log('inside of finished function on server file...');
 
@@ -102,7 +124,23 @@ app.post('/finish', function(req, res) {
     twilioService.buddyGoalComplete(user.buddyPhone); // text buddy goal is complete
 
     user.goal = null;
-    user.save((err, updatedUser) => err ? res.send(err) : res.send(updatedUser));
+    user.save()
+    .then((updatedUser) => {
+      res.send(updatedUser);
+      return updatedUser;
+    })
+    .then((updatedUser) => {
+      User.findOne({phoneNumber: user.buddyPhone}, function (err, buddy) { //find the buddy in db, remove the user from buddy's friends array
+        if (err) {console.error(err);}
+        else {
+          buddy.friends.id(updatedUser._id).remove();
+          buddy.save();
+        }
+      });
+    })
+    .catch((err) => {
+      res.send(err);
+    });
   });
 });
 
@@ -197,5 +235,8 @@ function grade(user) {
 }
 
 // start server
-app.listen(port);
-console.log('Listening on port ' + port + '...');
+db.once('open', function (){
+  console.log('mongo connection established');
+  app.listen(port);
+  console.log('Listening on port ' + port + '...');
+})

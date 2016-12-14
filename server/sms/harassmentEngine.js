@@ -30,6 +30,12 @@ getLastThreeResponses = function(responses){
 
 exports.harassmentChecker = function(user){
 
+//user input to generate random harassment interval
+  var timeToHarass = () => { 
+    Math.random * user.frequencyOfTexts
+  };
+
+
   var lastThreeResponses = getLastThreeResponses(user.responses);
 
   //initialize states to false
@@ -52,7 +58,7 @@ exports.harassmentChecker = function(user){
 
     setTimeout( function(){
         twilioService.harassUser(user.phoneNumber);
-      }, timeFromNowToHarass());
+      }, timeToHarass());
   }
 
   if (harassBuddy) {

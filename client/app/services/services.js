@@ -7,7 +7,7 @@ angular.module('app.service', [])
 			url:'/create',
 			data: JSON.stringify(user)
 		});
-    };
+  };
 
 	return {
 		add: add
