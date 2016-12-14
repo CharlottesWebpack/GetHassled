@@ -1,0 +1,19 @@
+<div ng-model='user' class="container">
+  <h1>Check out your piece of shit friends</h1>
+  <div ng-repeat="friend in user.data.friends" class="row">
+      <div class="col-md-4 col-md-offset-4">
+        <div>
+          <h3 class="buddyName">{{friend.name}}</h3>
+        </div>
+        <div>
+          <div>
+            <strong>Goal : </strong><span>{{friend.goal}}</span>
+          </div>
+          <div>
+            <strong>Grade : </strong><span>{{friend.grade}}</span>
+          </div>
+        </div>
+        <hr/>
+      </div>
+  </div>
+</div>

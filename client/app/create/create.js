@@ -87,17 +87,3 @@ angular.module("app.create", [])
 
     };
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -3,6 +3,7 @@ angular.module('app', [
 	'app.create',
   'app.finish',
 	'app.status',
+	'app.buddies',
 	'ngRoute'
 	])
 
@@ -19,6 +20,10 @@ angular.module('app', [
 	.when('/status', {
 		templateUrl:"app/status/status.html",
 		controller:"statusController"
+	})
+	.when('/buddies', {
+		templateUrl: "app/buddies/buddies.html",
+		controller: "buddiesController"
 	})
   .when('/finish', {
     templateUrl:"app/finish/finish.html",
