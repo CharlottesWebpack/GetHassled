@@ -75,6 +75,7 @@ app.get('/user', function(req, res) {
 
 // new user route
 app.post('/create', function(req, res) {
+  console.log(req.body)
   User.findById(req.body._id, function(err, user) { //find the user and create or update his goal and other info
     user.goal = req.body.goal;
     user.phoneNumber = req.body.phoneNumber;
@@ -84,7 +85,7 @@ app.post('/create', function(req, res) {
     user.grade = 100;
     user.harassUser = false;
     user.harassBuddy = false;
-    user.frequencyOfTexts = req.body.
+    user.frequencyOfTexts = req.body.frequencyOfTexts.value;
 
     user.save()
     .then((updatedUser) => {

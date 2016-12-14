@@ -7,10 +7,10 @@ angular.module("app.create", [])
   .error((err) => console.error(err));
 
   $scope.frequencyOfTexts = [
-    {value: '1-20hours', label:'More than once a day'}, 
-    {value: '20-30 hours', label:'Every day'}, 
-    {value: '30-100 hours' ,label:'A few times a week'}, 
-    {value: '150-170 hours', label:'Once a week'},
+    {value: (20*60*60*1000), label:'More than once a day'}, //multiply value by Math.random to send text every 2-20 hours
+    {value: (48*60*60*1000), label:'Every day'}, //multiply value by Math.random to send text every 18-30 ish hours
+    {value: (100*60*60*1000) ,label:'A few times a week'}, //multiply value by Math.random to send text every 30-100ish hours
+    {value: (325*60*60*1000), label:'Once a week'},//multiply value by Math.random to send text every 150-170ish hours
     {value: 'do something here', label:'Never'}
   ];
 
