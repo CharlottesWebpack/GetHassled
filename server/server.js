@@ -91,15 +91,15 @@ app.post('/create', function(req, res) {
       return updatedUser;
     })
     .then((updatedUser) => {
-      User.findOne({phoneNumber: user.buddyPhone}, function (err, user) { //find the buddy in db, add the user to buddy's friends array
+      User.findOne({phoneNumber: user.buddyPhone}, function (err, buddy) { //find the buddy in db, add the user to buddy's friends array
         if (err) {console.error(err);}
         else {
-          if (user.friends) {
-            user.friends.push(updatedUser);
+          if (buddy.friends) {
+            buddy.friends.push(updatedUser);
           } else {
-            user.friends = [updatedUser];
+            buddy.friends = [updatedUser];
           }
-          user.save();
+          buddy.save();
         }
       });
     })
@@ -115,7 +115,6 @@ app.post('/create', function(req, res) {
 
 // goal completion routes
 app.post('/finish', function(req, res) {
-  console.log('finishing...');
   User.findById(req.user._id, function(err, user) {
     console.log('inside of finished function on server file...');
 
@@ -123,7 +122,23 @@ app.post('/finish', function(req, res) {
     twilioService.buddyGoalComplete(user.buddyPhone); // text buddy goal is complete
 
     user.goal = null;
-    user.save((err, updatedUser) => err ? res.send(err) : res.send(updatedUser));
+    user.save()
+    .then((updatedUser) => {
+      res.send(updatedUser);
+      return updatedUser;
+    })
+    .then((updatedUser) => {
+      User.findOne({phoneNumber: user.buddyPhone}, function (err, buddy) { //find the buddy in db, remove the user from buddy's friends array
+        if (err) {console.error(err);}
+        else {
+          buddy.friends.id(updatedUser._id).remove();
+          buddy.save();
+        }
+      });
+    })
+    .catch((err) => {
+      res.send(err);
+    });
   });
 });
 
