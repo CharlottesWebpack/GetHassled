@@ -1,4 +1,5 @@
 // jshint esversion: 6
+
 var Keys = require('../keys');
 var SMSResponses = require('./responses');
 var twilio = require('twilio')(Keys.twilio.TWILIO_ACCOUNT_SID, Keys.twilio.TWILIO_AUTH_TOKEN);
@@ -181,6 +182,7 @@ exports.getLastResponse = function() {
     }
 
     if (lastResponse === "2") {
+      
       twilio.sendMessage({
         to: `+1${6468318760}`, // Any number Twilio can deliver to
         from: Keys.twilio.TWILIO_NUMBER, // A number you bought from Twilio and can use for outbound communication
