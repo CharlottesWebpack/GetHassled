@@ -7,7 +7,11 @@
     <h3>your info <small>(required)</small></h3>
     <hr />
     <form name="goalForm" ng-submit="addUser()" novalidate>
-
+    <div>
+         <span class="glyphicon glyphicon-user"></span><strong>Choose User type</strong><br><br>
+          <input type="radio" name="mode" value="Regular"> Regular<br><br>
+          <input type="radio" name="mode" value="sensitive"> Sensitive<br><br>
+    </div>
       <!--  GOAL -->
       <div class="form-group row">
         <label for="example-text-input" class="col-xs-4 col-form-label">* What do you want to accomplish?</label>
@@ -21,15 +25,6 @@
       <label for="example-tel-input" class="col-xs-4 col-form-label">* Your cellphone</label>
         <div class="col-xs-8">
           <input ng-model="user.phoneNumber" class="form-control" phone-input type="text"  placeholder="(555)-555-5555" pattern="^(?:\(\d{3}\)|\d{3})[- ]?\d{3}[- ]?\d{4}$" id="example-tel-input" required>
-        </div>
-      </div>
-
-      <!-- FREQUENCY OF HASSLE -->
-      <div class="form-group row">
-        <label for="option-input" class="col-xs-4 col-form-label">How often do you want to Get Hasseled?</label>
-        <div class="col-xs-8">
-          <select ng-model="user.frequencyOfTexts" ng-options="freq as freq.label for freq in frequencyOfTexts " class="form-control" type="select" id="option-input">
-          </select>
         </div>
       </div>
       <br />
