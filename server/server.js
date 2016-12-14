@@ -75,7 +75,6 @@ app.get('/user', function(req, res) {
 
 // new user route
 app.post('/create', function(req, res) {
-  console.log(req.body);
   User.findById(req.body._id, function(err, user) { //find the user and create or update his goal and other info
     user.goal = req.body.goal;
     user.phoneNumber = req.body.phoneNumber;
@@ -92,36 +91,30 @@ app.post('/create', function(req, res) {
       return updatedUser;
     })
     .then((updatedUser) => {
-      User.find({phoneNumber: user.buddyPhone}, function (err, user) {
-        if (err) {return err};
-        console.log("WE HAVE YOUR BUDDY IN OUR DB, ", user)
-        console.log("here's their freinds array:", user.friends);
-
-        if (user.friends) {
-          user.friends.push(updatedUser);
-        } else {
-          user.friends = [updatedUser];
+      User.findOne({phoneNumber: user.buddyPhone}, function (err, buddy) { //find the buddy in db, add the user to buddy's friends array
+        if (err) {console.error(err);}
+        else {
+          if (buddy.friends) {
+            buddy.friends.push(updatedUser);
+          } else {
+            buddy.friends = [updatedUser];
+          }
+          buddy.save();
         }
-        console.log(user);
-        //user.save();
       });
     })
     .catch((err) => {
       res.send(err);
     });
+
     twilioService.sendWelcome(user.phoneNumber);
     twilioService.notifyBuddy(user.buddyPhone, user.name, user.goal);
-
-
-
   });
-
 
 });
 
 // goal completion routes
 app.post('/finish', function(req, res) {
-  console.log('finishing...');
   User.findById(req.user._id, function(err, user) {
     console.log('inside of finished function on server file...');
 
@@ -129,7 +122,23 @@ app.post('/finish', function(req, res) {
     twilioService.buddyGoalComplete(user.buddyPhone); // text buddy goal is complete
 
     user.goal = null;
-    user.save((err, updatedUser) => err ? res.send(err) : res.send(updatedUser));
+    user.save()
+    .then((updatedUser) => {
+      res.send(updatedUser);
+      return updatedUser;
+    })
+    .then((updatedUser) => {
+      User.findOne({phoneNumber: user.buddyPhone}, function (err, buddy) { //find the buddy in db, remove the user from buddy's friends array
+        if (err) {console.error(err);}
+        else {
+          buddy.friends.id(updatedUser._id).remove();
+          buddy.save();
+        }
+      });
+    })
+    .catch((err) => {
+      res.send(err);
+    });
   });
 });
 
