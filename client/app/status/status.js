@@ -1,7 +1,6 @@
 angular.module("app.status", [])
 
 .controller("statusController", function($scope, $http, $location, createFactory) {
-  $scope.mode = createFactory.mode;
   $scope.user = {};
   $scope.finished = false;
   $scope.areYouDone = function() {
