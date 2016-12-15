@@ -1,6 +1,7 @@
 // jshint esversion: 6
 var Keys = require('../keys');
 var SMSResponses = require('./responses');
+var SensitiveSMSResponses = require('./sensitiveResponses');
 var TWILIO_NUMBER = process.env.TWILIO_NUMBER || Keys.twilio.TWILIO_NUMBER;
 var TWILIO_ACCOUNT_SID = process.env.TWILIO_ACCOUNT_SID || Keys.twilio.TWILIO_ACCOUNT_SID;
 var TWILIO_AUTH_TOKEN = process.env.TWILIO_AUTH_TOKEN || Keys.twilio.TWILIO_AUTH_TOKEN;
@@ -124,19 +125,24 @@ exports.buddyGoalComplete = function(buddyPhone) {
 //=========== respond to messages ====================//
 
 
-exports.responseMaker = function(req, res) {
+exports.responseMaker = function(req, res, mode) {
 
   var twilio = require('twilio');
   var twiml = new twilio.TwimlResponse();
+  
+  var smsResponseBucket = SMSResponses;
+  if (mode === 'sensitive') {
+    smsResponseBucket = SensitiveSMSResponses;
+  }
 
-  var randomPositive= Math.floor(Math.random() * SMSResponses.positiveResponses.length);
+  var randomPositive= Math.floor(Math.random() * smsResponseBucket.positiveResponses.length);
 
-  var randomNegative= Math.floor(Math.random() * SMSResponses.negativeResponses.length);
+  var randomNegative= Math.floor(Math.random() * smsResponseBucket.negativeResponses.length);
 
   if (req.query.Body == 1) {
-    twiml.message(SMSResponses.positiveResponses[randomPositive]);
+    twiml.message(smsResponseBucket.positiveResponses[randomPositive]);
   } else if (req.query.Body == 2) {
-    twiml.message(SMSResponses.negativeResponses[randomNegative]);
+    twiml.message(smsResponseBucket.negativeResponses[randomNegative]);
     // twiml.mediahttps: //s-media-cache-ak0.pinimg.com/originals/53/e6/eb/53e6eb8b9396ee2c1cc99b69582a07f3.jpg
   } else {
     twiml.message(`dude, it's 1 or 2 for a response...`);

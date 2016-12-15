@@ -3,7 +3,7 @@ angular.module("app.create", [])
 .controller("createController", function($scope, $http, $location, createFactory) {
   $scope.mode = createFactory.mode;
   $scope.changeMode = function() {
-    createFactory.mode = createFactory[$scope.mode];
+    createFactory.mode = createFactory[$scope.user.mode];
     $scope.mode = createFactory.mode;
   }
 

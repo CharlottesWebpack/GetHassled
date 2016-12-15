@@ -86,6 +86,7 @@ app.post('/create', function(req, res) {
     user.harassUser = false;
     user.harassBuddy = false;
     user.frequencyOfTexts = req.body.frequencyOfTexts.value;
+    user.mode = req.body.mode;
 
     user.save()
     .then((updatedUser) => {
@@ -154,19 +155,23 @@ app.get('/messageToConsole', function(req, res) {
   }, function(err, user) {
     if (err) {
       console.log(err);
-    } else if (user && user.responses && user.responses.length) {
-      // ensure that at least spam message has been sent, populated by an fail to be replaced
+    } else if (user) { // if user exists in db
+      // update the grade
+      if(user.responses && user.responses.length) {
 
-      // overwrite response at last entry in response array
-      user.responses[user.responses.length - 1] = [Date.now(), req.query.Body];
+        // ensure that at least spam message has been sent, populated by an fail to be replaced
 
-      // update user in database and invoke grading function on user
-      User.update({_id: user._id}, {responses: user.responses}, grade.call(user));
+        // overwrite response at last entry in response array
+        user.responses[user.responses.length - 1] = [Date.now(), req.query.Body];
+
+        // update user in database and invoke grading function on user
+        User.update({_id: user._id}, {responses: user.responses}, grade.call(user));
+
+      }
+      // send text message response
+      twilioService.responseMaker(req, res, user.mode);
     }
   });
-
-  // send text message response
-  twilioService.responseMaker(req, res);
 
 });
 
