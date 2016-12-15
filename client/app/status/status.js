@@ -1,7 +1,6 @@
 angular.module("app.status", [])
 
 .controller("statusController", function($scope, $http, $location, createFactory) {
-  $scope.mode = createFactory.mode;
   $scope.user = {};
   $scope.finished = false;
   $scope.areYouDone = function() {
@@ -9,7 +8,9 @@ angular.module("app.status", [])
   };
   $scope.finishGoal = function() {
     $http.post('/finish')
-      .success((user) => $location.path('/finish'));
+      .success((user) => {
+        createFactory.mode = createFactory[user.mode];
+        $location.path('/finish')});
   };
 
   $http.get('/user')
@@ -19,6 +20,7 @@ angular.module("app.status", [])
       } else if (!user.goal){
         $location.path('/create');
       }
+      $scope.mode = createFactory[user.mode];
       $scope.user = user;
 
       $scope.responses = user.responses.map((tuple) => {

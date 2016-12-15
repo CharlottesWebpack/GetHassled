@@ -2,6 +2,7 @@ angular.module('app.service', [])
 
 .factory('createFactory',  function($http) {
   var sensitive = {
+    modeName: 'sensitive',
     addHeader: "delicate flower",
     addPlaceholder: "Start working on your goals!",
     buddyPlaceholder: "Your supportive friend",
@@ -15,6 +16,7 @@ angular.module('app.service', [])
     rainbowMsg: 'Rainbow dash is incredibly dissappointed in your performance. Get it together.'
   };
   var regular = {
+    modeName: 'regular',
     addHeader: "you worthless piece of shit",
     addPlaceholder: "Get off your ass!",
     buddyPlaceholder: "Don't make us call your mother...",
@@ -27,8 +29,7 @@ angular.module('app.service', [])
     slothMsg: 'Take this sloth\'s vacant stare as an indication of how perfectly average we find you.',
     rainbowMsg: 'Rainbow dash is incredibly dissappointed in your performance. Get your shit together...'
   };
-
-  var mode = sensitive;
+  var mode = {};
 	var add = function(user) {
 		return $http({
 			method:'POST',
@@ -39,8 +40,8 @@ angular.module('app.service', [])
 
 	return {
 		add: add,
-    mode: mode,
     sensitive: sensitive,
-    regular: regular
+    regular: regular,
+    mode: mode
 	};
 });

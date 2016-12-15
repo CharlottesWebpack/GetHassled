@@ -1,12 +1,16 @@
 angular.module("app.buddies", [])
-.controller('buddiesController', function($scope, $http, createFactory) {
-  $scope.mode = createFactory.mode;
+.controller('buddiesController', function($scope, $http, createFactory, $location) {
   $http({
     method: 'GET',
     url: '/user',
-  }).then(function(user) {
-    $scope.user = user;
-    $scope.buddies = user.friends;
+  }).then(function(res) {
+    if (res.data){
+      $scope.user = res.data;
+      $scope.mode = createFactory[$scope.user.mode];
+      $scope.buddies = $scope.user.friends;
+    } else {
+      $location.path('/');
+    }
   });
 }).directive('buddiesDirective', function() {
   return {
