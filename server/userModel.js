@@ -15,7 +15,8 @@ userSchema.add({
   harassUser: Boolean,  // flag for if user should be harassed
   harassBuddy: Boolean,  // flag for if user's buddy should be harassed
   friends: [userSchema], //array of users who chose this user as their buddy
-  frequencyOfTexts: Number // how often user wants to receive messages
+  frequencyOfTexts: Number, // how often user wants to receive messages
+  mode: String
 });
 
 module.exports = mongoose.model('user', userSchema);
