@@ -7,4 +7,9 @@ angular.module("app.buddies", [])
     $scope.user = user;
     $scope.buddies = user.friends;
   });
+}).directive('buddiesDirective', function() {
+  return {
+    restrict: 'E',
+    templateUrl: 'app/buddies/buddiesDirectiveTemplate.html'
+  };
 });
