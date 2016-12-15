@@ -1,4 +1,4 @@
-<h1 class ="heading1-on-create">Add a goal, you worthless piece of shit...</h1>
+<h1 class ="heading1-on-create">Add a goal, {{mode.addHeader}}</h1>
 <br />
 
 <div class="row">
@@ -11,15 +11,15 @@
     <div class="form-group row">
       <label class="col-xs-4 col-form-label"><span class="glyphicon glyphicon-user"></span>Choose user type</label>
       <div class="col-xs-8">
-        <input type="radio" name="mode" value="regular"> Regular<br><br>
-        <input type="radio" name="mode" value="sensitive"> Sensitive<br><br>
+        <input ng-model="mode" ng-change="changeMode()" type="radio" name="mode" value="regular"> Regular<br><br>
+        <input ng-model="mode" ng-change="changeMode()" type="radio" name="mode" value="sensitive"> Sensitive<br><br>
       </div>
     </div>
       <!--  GOAL -->
       <div class="form-group row">
         <label for="example-text-input" class="col-xs-4 col-form-label">* What do you want to accomplish?</label>
         <div class="col-xs-8">
-          <input ng-model="user.goal" class="form-control" type="text" placeholder="Get off your ass!" id="example-text-input" required>
+          <input ng-model="user.goal" class="form-control" type="text" placeholder="{{mode.addPlaceholder}}" id="example-text-input" required>
         </div>
       </div>
 
@@ -48,7 +48,7 @@
       <div class="form-group row">
         <label for="example-text-input" class="col-xs-4 col-form-label">  Buddy's name</label>
         <div class="col-xs-8">
-          <input ng-model="user.buddyName" class="form-control" type="text" placeholder="Don't make us call your mother..." id="example-text-input">
+          <input ng-model="user.buddyName" class="form-control" type="text" placeholder="{{mode.buddyPlaceholder}}" id="example-text-input">
         </div>
       </div>
 
