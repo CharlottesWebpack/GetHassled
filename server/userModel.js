@@ -18,7 +18,8 @@ userSchema.add({
   friends: [userSchema], //array of users who chose this user as their buddy
   goalLength: Number, // how often user wants to receive messages
   mode: {type: String, default: 'sensitive'},
-  dateGoalCreated: Date
+  dateGoalCreated: Date,
+  frequencyOfTexts: Number, // how often user wants to receive messages
 });
 
 module.exports = mongoose.model('user', userSchema);
