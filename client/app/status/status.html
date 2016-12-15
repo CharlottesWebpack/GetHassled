@@ -21,9 +21,9 @@
         <button ng-click="areYouDone()" type="button" class="btn">I'm finished!</button>
       </div>
       <div ng-if="finished">
-        <p>Are you really finished?  If you lie to us we will find out and come to your house and take a dump on the porch...</p>
+        <p>Are you really finished? {{mode.finishedQuestion}}</p>
         <button ng-click="finishGoal()" type="button" class="btn btn-danger">Seriously, I'm done.</button>
-        <button ng-click="areYouDone()" type="button" class="btn">Ok, wait! Please don't do that...</button>
+        <button ng-click="areYouDone()" type="button" class="btn">Ok, wait! {{mode.finishedAnswer}}.</button>
       </div>
 
     </div>

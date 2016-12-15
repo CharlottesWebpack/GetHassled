@@ -1,6 +1,12 @@
 angular.module("app.create", [])
 
 .controller("createController", function($scope, $http, $location, createFactory) {
+  $scope.mode = createFactory.mode;
+  $scope.changeMode = function() {
+    createFactory.mode = createFactory[$scope.mode];
+    $scope.mode = createFactory.mode;
+  }
+
   $scope.user = {};
   $http.get('/user')
   .success((user) => $scope.user = user)
@@ -19,6 +25,7 @@ angular.module("app.create", [])
     createFactory.add($scope.user)
       .then(() => $location.path('/status'));
   };
+
 })
 .directive('phoneInput', function($filter, $browser) {
   return {

@@ -190,23 +190,26 @@ exports.spam = function() {
   console.log('hello from inside spam');
   User.find((err, users) => {
     users.forEach(user => {
-
+      if(user.goal) {
       // send harassment messages
-      var harassmentState = harassmentEngine.harassmentChecker(user);
-      user.harassUser = harassmentState.harassUser;
-      user.harassBuddy = harassmentState.harassBuddy;
+        var harassmentState = harassmentEngine.harassmentChecker(user);
+        user.harassUser = harassmentState.harassUser;
+        user.harassBuddy = harassmentState.harassBuddy;
 
-      // send out goal survey
-      twilioService.periodicGoalPoll(user.phoneNumber, user.goal);
+        
+          // send out goal survey if user has a goal
+          twilioService.periodicGoalPoll(user.phoneNumber, user.goal);
 
-      user.responses.push([Date.now(), 'new fail.']); // made changes to response array
+          user.responses.push([Date.now(), 'new fail.']); // made changes to response array
 
-      User.findOne({
-        phoneNumber: user.phoneNumber
-      }, function(err, updateUser) {
-        updateUser.responses = user.responses;
-        updateUser.save();
-      });
+
+        User.findOne({
+          phoneNumber: user.phoneNumber
+        }, function(err, updateUser) {
+          updateUser.responses = user.responses;
+          updateUser.save();
+        });
+      } 
     });
   });
 
