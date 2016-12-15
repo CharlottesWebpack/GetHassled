@@ -1,9 +1,9 @@
 exports.positiveResponses = [
   `Nice job!🙌`,
   `You made it! 🎉`,
-  `I'll admit, I'm not at all surprised. You're doing great.🍾`,
+  `I'm not at all surprised. You're doing great.🍾`,
   `You should be very proud of yourself.💫`,
-  `You make a lot of progress! 💪`,
+  `You've made a lot of progress! 💪`,
   `Honestly, I always knew you had it in you... 👍`,
   `That's another step closer to success. Congrats! 🍾`,
   `Your average score keeps going up ☝️`,
@@ -11,7 +11,7 @@ exports.positiveResponses = [
   `Keep going! 👍`,
   `This is music to my ears 🎷`,
   `Enjoy this feeling 😎`,
-  `That the way to go! 👍`
+  `That's the way to go! 👍`
 ];
 
 exports.negativeResponses = [
