@@ -1,5 +1,6 @@
 angular.module("app.buddies", [])
-.controller('buddiesController', function($scope, $http) {
+.controller('buddiesController', function($scope, $http, createFactory) {
+  $scope.mode = createFactory.mode;
   $http({
     method: 'GET',
     url: '/user',
