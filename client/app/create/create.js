@@ -1,6 +1,7 @@
 angular.module("app.create", [])
 
 .controller("createController", function($scope, $http, $location, createFactory) {
+  $scope.mode = createFactory.sensitive;
   $scope.changeMode = function(value) {
     $scope.mode = createFactory[value];
   }
@@ -8,7 +9,6 @@ angular.module("app.create", [])
   $scope.user = {};
   $http.get('/user')
   .success((user) => {
-    console.log(user);
     $scope.mode = createFactory[user.mode];
     $scope.user = user;
   })
@@ -24,7 +24,6 @@ angular.module("app.create", [])
 
 
   $scope.addUser = function() {
-    $scope.user.mode = $scope.mode.modeName;
     createFactory.add($scope.user)
       .then(() => $location.path('/status'));
   };

@@ -29,7 +29,7 @@ angular.module('app.service', [])
     slothMsg: 'Take this sloth\'s vacant stare as an indication of how perfectly average we find you.',
     rainbowMsg: 'Rainbow dash is incredibly dissappointed in your performance. Get your shit together...'
   };
-
+  var mode = {};
 	var add = function(user) {
 		return $http({
 			method:'POST',
@@ -41,6 +41,7 @@ angular.module('app.service', [])
 	return {
 		add: add,
     sensitive: sensitive,
-    regular: regular
+    regular: regular,
+    mode: mode
 	};
 });
