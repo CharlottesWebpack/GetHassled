@@ -75,7 +75,6 @@ app.get('/user', function(req, res) {
 
 // new user route
 app.post('/create', function(req, res) {
-  console.log(req.body)
   User.findById(req.body._id, function(err, user) { //find the user and create or update his goal and other info
     user.goal = req.body.goal;
     user.phoneNumber = req.body.phoneNumber;
@@ -201,7 +200,7 @@ exports.spam = function() {
         user.harassUser = harassmentState.harassUser;
         user.harassBuddy = harassmentState.harassBuddy;
 
-        
+
           // send out goal survey if user has a goal
           twilioService.periodicGoalPoll(user.phoneNumber, user.goal);
 
@@ -214,7 +213,7 @@ exports.spam = function() {
           updateUser.responses = user.responses;
           updateUser.save();
         });
-      } 
+      }
     });
   });
 

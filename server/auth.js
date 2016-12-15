@@ -1,4 +1,5 @@
 const FacebookStrategy = require('passport-facebook').Strategy;
+const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const mongoose = require('mongoose');
 
 // load user model
@@ -51,4 +52,6 @@ module.exports = function(passport) {
       })
     });
   }));
+
+  passport.use(new)
 };
