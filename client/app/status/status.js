@@ -1,6 +1,7 @@
 angular.module("app.status", [])
 
-.controller("statusController", function($scope, $http, $location) {
+.controller("statusController", function($scope, $http, $location, createFactory) {
+  $scope.mode = createFactory.mode;
   $scope.user = {};
   $scope.finished = false;
   $scope.areYouDone = function() {
@@ -15,6 +16,8 @@ angular.module("app.status", [])
     .success((user) => {
       if (!user) {
         $location.path('/');
+      } else if (!user.goal){
+        $location.path('/create');
       }
       $scope.user = user;
 
@@ -34,15 +37,15 @@ angular.module("app.status", [])
       if (user.grade > 70) {
         $scope.progBarClass = 'progress-bar progress-bar-success active';
         $scope.image = 'assets/strippercorn.png';
-        $scope.message = 'This unicorn stripper is here to tell you what a great job you\'re doing!';
+        $scope.message = $scope.mode.unicornMsg;
       } else if (user.grade > 40) {
         $scope.progBarClass = 'progress-bar progress-bar-warning active';
         $scope.image = 'assets/sloth.png';
-        $scope.message = 'Take this sloth\'s vacant stare as an indication of how perfectly average we find you.';
+        $scope.message = $scope.mode.slothMsg;
       } else {
         $scope.progBarClass = 'progress-bar progress-bar-danger active';
         $scope.image = 'assets/rainbowdash.png';
-        $scope.message = 'Rainbow dash is incredibly dissappointed in your performance. Get your shit together...';
+        $scope.message = $scope.mode.rainbowMsg;
       }
     })
     .error((err) => console.error(err));
