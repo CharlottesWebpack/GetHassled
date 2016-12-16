@@ -62,6 +62,23 @@ app.get('/auth/facebook/callback', passport.authenticate('facebook', {
       res.redirect('/app/#/status');
     }
 });
+
+app.get('/auth/google', passport.authenticate('google', { scope : ['profile'] }));
+app.get('/auth/google/callback', passport.authenticate('google', {
+  failureRedirect: "/"
+}), (req, res) => {
+    console.log("request google callback", req.user)
+    // passport attaches user information to all incoming requests
+    if (!req.user.goal) {
+      // if user has no goal, allow them to create one
+      res.redirect('/app/#/create');
+    } else {
+      // else log user in and redirect to goal status page
+      res.redirect('/app/#/status');
+    }
+});
+
+
 app.get('/logout', (req, res) => {
   // passport attaches logout method to all requests
   req.logout();
@@ -75,7 +92,6 @@ app.get('/user', function(req, res) {
 
 // new user route
 app.post('/create', function(req, res) {
-  console.log(req.body)
   User.findById(req.body._id, function(err, user) { //find the user and create or update his goal and other info
     user.goal = req.body.goal;
     user.phoneNumber = req.body.phoneNumber;
@@ -201,7 +217,7 @@ exports.spam = function() {
         user.harassUser = harassmentState.harassUser;
         user.harassBuddy = harassmentState.harassBuddy;
 
-        
+
           // send out goal survey if user has a goal
           twilioService.periodicGoalPoll(user.phoneNumber, user.goal);
 
@@ -214,7 +230,7 @@ exports.spam = function() {
           updateUser.responses = user.responses;
           updateUser.save();
         });
-      } 
+      }
     });
   });
 

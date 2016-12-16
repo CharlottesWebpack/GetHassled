@@ -59,7 +59,7 @@ exports.harassUser = function(userPhoneNumber) {
   twilio.sendMessage({
     to: `+1${userPhoneNumber}`, // Any number Twilio can deliver to
     from: TWILIO_NUMBER, // A number you bought from Twilio and can use for outbound communication
-    body: `You're falling behind on your goal. Get back on track to stop sucking and end these messages.` //,
+    body: `You're falling behind on your goal. Get back on track to end these messages.` //,
       //  mediaUrl: 'https://s-media-cache-ak0.pinimg.com/originals/53/e6/eb/53e6eb8b9396ee2c1cc99b69582a07f3.jpg'
       // body of the SMS message
   }, function(err, responseData) { //this function is executed when a response is received from Twilio
@@ -93,7 +93,7 @@ exports.userGoalComplete = function(userPhoneNumber) {
   twilio.sendMessage({
     to: `+1${userPhoneNumber}`, // Any number Twilio can deliver to
     from: TWILIO_NUMBER, // A number you bought from Twilio and can use for outbound communication
-    body: `Congrats on completing your goal. No seriously, we're proud...` //,
+    body: `Congrats on completing your goal. We're proud.` //,
       //  mediaUrl: 'https://s-media-cache-ak0.pinimg.com/originals/53/e6/eb/53e6eb8b9396ee2c1cc99b69582a07f3.jpg'
       // body of the SMS message
   }, function(err, responseData) { //this function is executed when a response is received from Twilio
@@ -129,7 +129,7 @@ exports.responseMaker = function(req, res, mode) {
 
   var twilio = require('twilio');
   var twiml = new twilio.TwimlResponse();
-  
+
   var smsResponseBucket = SMSResponses;
   if (mode === 'sensitive') {
     smsResponseBucket = SensitiveSMSResponses;
@@ -145,7 +145,7 @@ exports.responseMaker = function(req, res, mode) {
     twiml.message(smsResponseBucket.negativeResponses[randomNegative]);
     // twiml.mediahttps: //s-media-cache-ak0.pinimg.com/originals/53/e6/eb/53e6eb8b9396ee2c1cc99b69582a07f3.jpg
   } else {
-    twiml.message(`dude, it's 1 or 2 for a response...`);
+    twiml.message(`It's 1 or 2 for a response...`);
   }
   res.writeHead(200, {
     'Content-Type': 'text/xml'

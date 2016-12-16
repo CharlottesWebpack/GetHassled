@@ -4,7 +4,7 @@ var mongoose = require('mongoose');
 var userSchema = mongoose.Schema()
 userSchema.add({
   token: String, // facebook token
-  id: String, // facebook id
+  id: String, // facebook or google id
   name: String, // facebook display name
   phoneNumber: String, // user phone number
   buddyName: String,  // accountability buddy name
