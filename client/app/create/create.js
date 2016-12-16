@@ -14,16 +14,16 @@ angular.module("app.create", [])
   })
   .error((err) => console.error(err));
 
-  $scope.frequencyOfTexts = [
-    {value: (20*60*60*1000), label:'More than once a day'}, //multiply value by Math.random to send text every 2-20 hours
-    {value: (48*60*60*1000), label:'Every day'}, //multiply value by Math.random to send text every 18-30 ish hours
-    {value: (100*60*60*1000) ,label:'A few times a week'}, //multiply value by Math.random to send text every 30-100ish hours
-    {value: (325*60*60*1000), label:'Once a week'}//multiply value by Math.random to send text every 150-170ish hours
-    // {value: 'do something here', label:'Never'} we should do something with this
+  $scope.goalLength = [
+    {value: (7*24*60*60*1000), label:'One week'},
+    {value: (14*24*60*60*1000), label:'Two weeks'}, 
+    {value: (4*7*24*60*60*1000) ,label:'One month'}, 
+    {value: (3*4*7*24*60*60*1000), label:'Three months'}
   ];
 
 
   $scope.addUser = function() {
+    $scope.user.dateGoalCreated = new Date();
     createFactory.add($scope.user)
       .then(() => $location.path('/status'));
   };
