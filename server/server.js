@@ -101,8 +101,9 @@ app.post('/create', function(req, res) {
     user.grade = 100;
     user.harassUser = false;
     user.harassBuddy = false;
-    user.frequencyOfTexts = req.body.frequencyOfTexts.value;
+    user.goalLength = req.body.goalLength.value;
     user.mode = req.body.mode;
+    user.dateGoalCreated = req.body.dateGoalCreated;
 
     user.save()
     .then((updatedUser) => {
