@@ -126,7 +126,7 @@ app.post('/create', function(req, res) {
       res.send(err);
     });
 
-    twilioService.sendWelcome(user.phoneNumber);
+    twilioService.sendWelcome(user.phoneNumber, user.mode);
     twilioService.notifyBuddy(user.buddyPhone, user.name, user.goal);
   });
 

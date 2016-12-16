@@ -12,8 +12,10 @@ angular.module('app.service', [])
     finishedHeader: "Good job! You deserve a treat!",
     setNew: "Set a new goal!",
     unicornMsg: 'This unicorn is here to tell you what a great job you\'re doing!',
-    slothMsg: 'Take this sloth\'s vacant stare as an indication that you\re doing ok.',
-    rainbowMsg: 'Rainbow dash is incredibly dissappointed in your performance. Get it together.'
+    slothMsg: 'Take this sloth\'s vacant stare as an indication that you\'re doing an average job.',
+    rainbowMsg: 'Rainbow dash is incredibly dissappointed in your performance. Get it together.',
+    progress1: 'you did great',
+    progress2: 'not your best day'
   };
   var regular = {
     modeName: 'regular',
@@ -27,7 +29,9 @@ angular.module('app.service', [])
     setNew: "Set a new goal already...",
     unicornMsg: 'This unicorn stripper is here to tell you what a great job you\'re doing!',
     slothMsg: 'Take this sloth\'s vacant stare as an indication of how perfectly average we find you.',
-    rainbowMsg: 'Rainbow dash is incredibly dissappointed in your performance. Get your shit together...'
+    rainbowMsg: 'Rainbow dash is incredibly dissappointed in your performance. Get your shit together...',
+    progress1: 'you didn\'t suck',
+    progress2: 'you blew it'
   };
   var mode = {};
 	var add = function(user) {

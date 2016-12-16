@@ -9,12 +9,14 @@ var twilio = require('twilio')(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
 
 //===========send welcome message ====================//
 
-exports.sendWelcome = function(userPhoneNumber) {
-
+exports.sendWelcome = function(userPhoneNumber, mode) {
+  var welcome = mode === 'sensitive' ?
+    `Welcome to Get Hassled. You'll get a daily text from hassle to check in on your progress. Stay on track! ` :
+    `Welcome to Get Hassled, loser. You'll get a daily text from hassle to check in on your progress. Stay on track... or you'll regret it. `
   twilio.sendMessage({
     to: `+1${userPhoneNumber}`, // Any number Twilio can deliver to
     from: TWILIO_NUMBER, // A number you bought from Twilio and can use for outbound communication
-    body: `Welcome to Get Hassled, loser. You'll get a daily text from hassle to check in on your progress. Stay on track... or you'll regret it. ` // body of the SMS message
+    body:  welcome// body of the SMS message
 
   }, function(err, responseData) { //this function is executed when a response is received from Twilio
     if (!err) { // "err" is an error received during the request, if any
