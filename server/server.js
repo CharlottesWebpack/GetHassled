@@ -258,6 +258,17 @@ function grade(user) {
   }
 }
 
+app.post('/users/delete', function(req, res){
+    var userId = req.user._id;
+    User.remove({"_id": userId}, function(err, data){
+      if(err){
+        res.send(404)
+      }else {
+        res.send("deleted");
+      }
+    });
+});
+
 // start server
 db.once('open', function (){
   console.log('mongo connection established');
