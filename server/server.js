@@ -101,8 +101,9 @@ app.post('/create', function(req, res) {
     user.grade = 100;
     user.harassUser = false;
     user.harassBuddy = false;
-    user.frequencyOfTexts = req.body.frequencyOfTexts.value;
+    user.goalLength = req.body.goalLength.value;
     user.mode = req.body.mode;
+    user.dateGoalCreated = req.body.dateGoalCreated;
 
     user.save()
     .then((updatedUser) => {
@@ -181,7 +182,9 @@ app.get('/messageToConsole', function(req, res) {
         user.responses[user.responses.length - 1] = [Date.now(), req.query.Body];
 
         // update user in database and invoke grading function on user
-        User.update({_id: user._id}, {responses: user.responses}, grade.call(user));
+        User.update({_id: user._id}, {responses: user.responses}, function() {
+          exports.gradeUsers();
+        });
 
       }
       // send text message response
@@ -247,6 +250,7 @@ exports.gradeUsers = function() {
 
 // grades users based on their response history
 function grade(user) {
+  console.log('user inside of grade', user);
   if(user.responses && user.responses.length) {
 
     // calculate percentage of positive ('1') responses
