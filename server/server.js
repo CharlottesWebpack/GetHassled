@@ -181,7 +181,9 @@ app.get('/messageToConsole', function(req, res) {
         user.responses[user.responses.length - 1] = [Date.now(), req.query.Body];
 
         // update user in database and invoke grading function on user
-        User.update({_id: user._id}, {responses: user.responses}, grade.bind(user));
+        User.update({_id: user._id}, {responses: user.responses}, function(user) {
+          grade(user);
+        });
 
       }
       // send text message response
