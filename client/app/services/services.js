@@ -1,6 +1,6 @@
 angular.module('app.service', [])
 
-.factory('createFactory',  function($http) {
+.factory('createFactory',  function($http, $location) {
   var sensitive = {
     modeName: 'sensitive',
     addHeader: "delicate flower",
@@ -38,10 +38,21 @@ angular.module('app.service', [])
 		});
   };
 
+  var deleteAccount = function() {
+    return $http({
+      method: 'POST',
+      url: '/users/delete',
+    }).then((res) => {
+      console.log(res);
+      $location.path('/');
+    });
+  };
+
 	return {
+    mode: mode,
 		add: add,
     sensitive: sensitive,
     regular: regular,
-    mode: mode
+    deleteAccount: deleteAccount
 	};
 });

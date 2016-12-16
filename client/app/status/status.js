@@ -52,4 +52,15 @@ angular.module("app.status", [])
     })
     .error((err) => console.error(err));
 
-});
+  $scope.deleteProfile = function() {
+    if(confirm("Are you sure you want to delete")){;
+
+     createFactory.deleteAccount()
+      .then(() => {
+        $location.path('/');
+      })
+    }else{
+     $location.path('/status')
+    }
+  };
+})
