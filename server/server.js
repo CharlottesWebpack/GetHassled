@@ -249,6 +249,7 @@ exports.gradeUsers = function() {
 
 // grades users based on their response history
 function grade(user) {
+  console.log(user);
   if(user.responses && user.responses.length) {
 
     // calculate percentage of positive ('1') responses
