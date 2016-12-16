@@ -53,5 +53,24 @@ module.exports = function(passport) {
     });
   }));
 
-  passport.use(new)
+  passport.use(new GoogleStrategy({
+    clientID: process.env.GOOGLE_CLIENT_ID || Keys.google.client_id,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET || Keys.google.client_secret,
+    callbackURL: process.env.GOOGLE_CALLBACK_URL || Keys.google.callbackURL
+  },
+  function(accessToken, refreshToken, profile, done) {
+    process.nextTick(function() {
+      User.findOne({ id: profile.id }, function (err, user) {
+        if (err) return done(err);
+        else if (user) {
+          return done(null, user); // pass user back to passport if found
+        } else { //create new user if now found
+          var newUser = new User();
+          newUser.id = profile.id;
+          newUser.name = profile.displayName;
+          newUser.save((err) => err ? done(err) : done(null, newUser));
+        }
+      });
+    });
+  }));
 };

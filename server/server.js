@@ -62,6 +62,23 @@ app.get('/auth/facebook/callback', passport.authenticate('facebook', {
       res.redirect('/app/#/status');
     }
 });
+
+app.get('/auth/google', passport.authenticate('google', { scope : ['profile'] }));
+app.get('/auth/google/callback', passport.authenticate('google', {
+  failureRedirect: "/"
+}), (req, res) => {
+    console.log("request google callback", req.user)
+    // passport attaches user information to all incoming requests
+    if (!req.user.goal) {
+      // if user has no goal, allow them to create one
+      res.redirect('/app/#/create');
+    } else {
+      // else log user in and redirect to goal status page
+      res.redirect('/app/#/status');
+    }
+});
+
+
 app.get('/logout', (req, res) => {
   // passport attaches logout method to all requests
   req.logout();
