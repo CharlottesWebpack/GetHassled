@@ -27,9 +27,9 @@ angular.module("app.status", [])
         if (tuple) {
           tuple[0] = moment(tuple[0]).fromNow();
           if (tuple[1] === '1') {
-            tuple[1] = 'you didn\'t suck';
+            tuple[1] = $scope.mode.progress1;
           } else if (tuple[1] === '2') {
-            tuple[1] = 'you blew it';
+            tuple[1] = $scope.mode.progress2;
           }
         }
         return tuple;
