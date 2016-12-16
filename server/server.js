@@ -182,7 +182,8 @@ app.get('/messageToConsole', function(req, res) {
 
         // update user in database and invoke grading function on user
         User.update({_id: user._id}, {responses: user.responses}, function(user) {
-          grade(user);
+          console.log('user inside of message to console', user);
+          grade.bind(user);
         });
 
       }
@@ -249,7 +250,7 @@ exports.gradeUsers = function() {
 
 // grades users based on their response history
 function grade(user) {
-  console.log(user);
+  console.log('user inside of grade', user);
   if(user.responses && user.responses.length) {
 
     // calculate percentage of positive ('1') responses
