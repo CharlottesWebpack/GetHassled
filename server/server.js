@@ -136,7 +136,6 @@ app.post('/create', function(req, res) {
 // goal completion routes
 app.post('/finish', function(req, res) {
   User.findById(req.user._id, function(err, user) {
-    console.log('inside of finished function on server file...');
 
     twilioService.userGoalComplete(user.phoneNumber); // text user goal is complete
     twilioService.buddyGoalComplete(user.buddyPhone); // text buddy goal is complete
@@ -211,7 +210,6 @@ app.post('/externaHarassmentAPI', function(req, res) {
 
 // spam routine
 exports.spam = function() {
-  console.log('hello from inside spam');
   User.find((err, users) => {
     users.forEach(user => {
       if(user.goal) {
@@ -250,7 +248,6 @@ exports.gradeUsers = function() {
 
 // grades users based on their response history
 function grade(user) {
-  console.log('user inside of grade', user);
   if(user.responses && user.responses.length) {
 
     // calculate percentage of positive ('1') responses
