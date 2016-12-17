@@ -47,7 +47,7 @@ module.exports = function(passport) {
           newUser.token = token;
           newUser.id = profile.id;
           newUser.name = profile.displayName;
-          newUser.email = profile.emails[0].value;
+          newUser.email = profile.emails[0].value || null;
           // pass new user back to passport after saving to database
           newUser.save((err) => err ? done(err) : done(null, newUser));
         }
