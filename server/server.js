@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 var port = process.env.PORT || 8000;
 var app = express();
 var nodemailer = require('nodemailer');
-
+var fs = require('fs');
 // configure database
 var morgan = require('morgan');
 var mongoose = require('mongoose');
@@ -205,6 +205,21 @@ app.get('/messageToConsole', function(req, res) {
   });
 
 });
+
+app.post('/callUser', function(req, res) {
+  fs.readFile(__dirname + '/sms/callUser.xml', (err, data) => {
+    if (err) console.error(err);
+    res.set('Content-Type', 'text/xml');
+    res.send(data);
+  });
+})
+app.post('/callBuddy', function(req, res) {
+  fs.readFile(__dirname + '/sms/callBuddy.xml', (err, data) => {
+    if (err) console.error(err);
+    res.set('Content-Type', 'text/xml');
+    res.send(data);
+  });
+})
 
 // dev testing route for manually invoking spam functions
 app.post('/test', function(req, res) {
