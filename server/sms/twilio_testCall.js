@@ -9,7 +9,7 @@ var twilio = require('twilio')(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
 twilio.makeCall({
     from: '+12168209563',
     to: '+14159102047',
-    url: "http://demo.twilio.com/docs/voice.xml",
+    url: "https://get-hassled.herokuapp.com/makeCalls",
   }, function (err, responseData) {
     console.log(responseData);
   });
