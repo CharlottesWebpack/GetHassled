@@ -47,11 +47,11 @@ module.exports = function(passport) {
           newUser.token = token;
           newUser.id = profile.id;
           newUser.name = profile.displayName;
-          if(profile.emails) {
+          // if(profile.emails) {
             newUser.email = profile.emails[0].value;
-          } else {
-            newUser.email = null;
-          }
+          // } else {
+          //   newUser.email = null;
+          // }
           // pass new user back to passport after saving to database
           newUser.save((err) => err ? done(err) : done(null, newUser));
         }
