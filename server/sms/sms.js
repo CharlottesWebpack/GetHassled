@@ -11,8 +11,8 @@ var twilio = require('twilio')(TWILIO_ACCOUNT_SID, TWILIO_AUTH_TOKEN);
 
 exports.sendWelcome = function(userPhoneNumber, mode) {
   var welcome = mode === 'sensitive' ?
-    `Welcome to Get Hassled. You'll get a daily text from hassle to check in on your progress. Stay on track! ` :
-    `Welcome to Get Hassled, loser. You'll get a daily text from hassle to check in on your progress. Stay on track... or you'll regret it. `
+    `Welcome to Hassled. You'll get a daily text from hassle to check in on your progress. Stay on track! ` :
+    `Welcome to Hassled, loser. You'll get a daily text from hassle to check in on your progress. Stay on track... or you'll regret it. `
   twilio.sendMessage({
     to: `+1${userPhoneNumber}`, // Any number Twilio can deliver to
     from: TWILIO_NUMBER, // A number you bought from Twilio and can use for outbound communication
@@ -78,7 +78,7 @@ exports.harassBuddy = function(buddyPhone) {
   twilio.sendMessage({
     to: `+1${buddyPhone}`, // Any number Twilio can deliver to
     from: TWILIO_NUMBER, // A number you bought from Twilio and can use for outbound communication
-    body: `You're getting annoyed bc your buddy is falling behind on their goal.` //,
+    body: `Your buddy is falling behind on their goal. Make them work harder to end these messages` //,
       //  mediaUrl: 'https://s-media-cache-ak0.pinimg.com/originals/53/e6/eb/53e6eb8b9396ee2c1cc99b69582a07f3.jpg'
       // body of the SMS message
   }, function(err, responseData) { //this function is executed when a response is received from Twilio

@@ -3,7 +3,7 @@ angular.module('app.service', [])
 .factory('createFactory',  function($http, $location) {
   var sensitive = {
     modeName: 'sensitive',
-    addHeader: "delicate flower",
+    addHeader: "you delicate flower",
     addPlaceholder: "Start working on your goals!",
     buddyPlaceholder: "Your supportive friend",
     buddiesHeader: "friends' progress",
