@@ -58,34 +58,54 @@ exports.periodicGoalPoll = function(userPhoneNumber, userGoal) {
 //=========== outbound harassment message to USER ====================//
 
 exports.harassUser = function(userPhoneNumber) {
-  twilio.sendMessage({
-    to: `+1${userPhoneNumber}`, // Any number Twilio can deliver to
-    from: TWILIO_NUMBER, // A number you bought from Twilio and can use for outbound communication
-    body: `You're falling behind on your goal. Get back on track to end these messages.` //,
-      //  mediaUrl: 'https://s-media-cache-ak0.pinimg.com/originals/53/e6/eb/53e6eb8b9396ee2c1cc99b69582a07f3.jpg'
-      // body of the SMS message
-  }, function(err, responseData) { //this function is executed when a response is received from Twilio
-
-    if (!err) { // "err" is an error received during the request, if any
-    }
+////NEW CODE CALLING USERS
+  twilio.makeCall({
+    from: TWILIO_NUMBER,
+    to: `+1${userPhoneNumber}`,
+    url: "https://get-hassled.herokuapp.com/callUser",
+  }, function (err, responseData) {
+    console.log(responseData);
   });
+
+/////OLD CODE SENDING TEXTS
+  // twilio.sendMessage({
+  //   to: `+1${userPhoneNumber}`, // Any number Twilio can deliver to
+  //   from: TWILIO_NUMBER, // A number you bought from Twilio and can use for outbound communication
+  //   body: `You're falling behind on your goal. Get back on track to end these messages.` //,
+  //     //  mediaUrl: 'https://s-media-cache-ak0.pinimg.com/originals/53/e6/eb/53e6eb8b9396ee2c1cc99b69582a07f3.jpg'
+  //     // body of the SMS message
+  // }, function(err, responseData) { //this function is executed when a response is received from Twilio
+
+  //   if (!err) { // "err" is an error received during the request, if any
+  //   }
+  // });
 };
 
 
 //=========== outbound harassment message to USER ====================//
 
 exports.harassBuddy = function(buddyPhone) {
-  twilio.sendMessage({
-    to: `+1${buddyPhone}`, // Any number Twilio can deliver to
-    from: TWILIO_NUMBER, // A number you bought from Twilio and can use for outbound communication
-    body: `Your buddy is falling behind on their goal. Make them work harder to end these messages` //,
-      //  mediaUrl: 'https://s-media-cache-ak0.pinimg.com/originals/53/e6/eb/53e6eb8b9396ee2c1cc99b69582a07f3.jpg'
-      // body of the SMS message
-  }, function(err, responseData) { //this function is executed when a response is received from Twilio
-
-    if (!err) { // "err" is an error received during the request, if any
-    }
+  ////NEW CODE CALLING USERS
+  twilio.makeCall({
+    from: TWILIO_NUMBER,
+    to: `+1${buddyPhone}`,
+    url: "https://get-hassled.herokuapp.com/callBuddy",
+  }, function (err, responseData) {
+    console.log(responseData);
   });
+
+/////OLD CODE SENDING TEXTS
+  // twilio.sendMessage({
+  //   to: `+1${buddyPhone}`, // Any number Twilio can deliver to
+  //   from: TWILIO_NUMBER, // A number you bought from Twilio and can use for outbound communication
+  //   body: `Your buddy is falling behind on their goal. Make them work harder to end these messages` //,
+  //     //  mediaUrl: 'https://s-media-cache-ak0.pinimg.com/originals/53/e6/eb/53e6eb8b9396ee2c1cc99b69582a07f3.jpg'
+  //     // body of the SMS message
+  // }, function(err, responseData) { //this function is executed when a response is received from Twilio
+
+  //   if (!err) { // "err" is an error received during the request, if any
+  //   }
+  // });
 };
 
 //=========== outbound complete message to USER ====================//
@@ -156,6 +176,7 @@ exports.responseMaker = function(req, res, mode) {
 
 };
 
+
 ////////////////////////////////////////////////////////
 //////////Disregard the rest (made for testing)//////////////
 ////////////////////////////////////////////////////////
@@ -216,12 +237,14 @@ exports.getAllMessages = function() {
 };
 
 
-exports.spamCall = function(){
 
+// =========== call users that did not achieve their goal in set time ====================//
+////TEST FUNCTION, DOES NOT HAVE A ROUTE ANYMORE
+exports.spamCall = function(user){
   twilio.makeCall({
     from: TWILIO_NUMBER,
-    to: '+14159102047',
-    url: "http://demo.twilio.com/docs/voice.xml",
+    to: user.phoneNumber,
+    url: "https://get-hassled.herokuapp.com/makeCalls",
   }, function (err, responseData) {
     console.log(responseData);
   });

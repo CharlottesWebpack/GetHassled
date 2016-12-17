@@ -206,15 +206,19 @@ app.get('/messageToConsole', function(req, res) {
 
 });
 
-app.post('/makeCalls', function(req, res) {
-  console.log(req);
-  fs.readFile(__dirname + '/call.xml', (err, data) => {
+app.post('/callUser', function(req, res) {
+  fs.readFile(__dirname + '/sms/callUser.xml', (err, data) => {
     if (err) console.error(err);
-    console.log("DATA", data);
     res.set('Content-Type', 'text/xml');
     res.send(data);
-  })
-
+  });
+})
+app.post('/callBuddy', function(req, res) {
+  fs.readFile(__dirname + '/sms/callBuddy.xml', (err, data) => {
+    if (err) console.error(err);
+    res.set('Content-Type', 'text/xml');
+    res.send(data);
+  });
 })
 
 // dev testing route for manually invoking spam functions
