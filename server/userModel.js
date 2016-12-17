@@ -5,8 +5,8 @@ var userSchema = mongoose.Schema()
 userSchema.add({
   token: String, // facebook token
   id: String, // facebook or google id
-  name: String,
-  email:String, // facebook display name
+  name: String,// facebook display name
+  email:String,//email id of the user 
   phoneNumber: String, // user phone number
   buddyName: String,  // accountability buddy name
   buddyPhone: String,  // accountability buddy phone number
