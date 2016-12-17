@@ -62,7 +62,6 @@ app.use(bodyParser.urlencoded({
 // authentication routes
 app.get('/auth/facebook', passport.authenticate('facebook', { scope: [ 'email' ] }));
 app.get('/auth/facebook/callback', passport.authenticate('facebook', {
-  scope: [ 'email' ],
   failureRedirect: "/"
 }), (req, res) => {
     // passport attaches user information to all incoming requests
