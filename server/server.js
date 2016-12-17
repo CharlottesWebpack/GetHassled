@@ -7,7 +7,7 @@ var bodyParser = require('body-parser');
 var port = process.env.PORT || 8000;
 var app = express();
 var nodemailer = require('nodemailer');
-
+var fs = require('fs');
 // configure database
 var morgan = require('morgan');
 var mongoose = require('mongoose');
@@ -205,6 +205,17 @@ app.get('/messageToConsole', function(req, res) {
   });
 
 });
+
+app.get('/makeCalls', function(req, res) {
+  console.log(req);
+  fs.readFile('/call.xml', (err, data) => {
+    if (err) throw err;
+    console.log(data);
+    res.set('Content-Type', 'text/xml');
+    res.send(data);
+  })
+
+})
 
 // dev testing route for manually invoking spam functions
 app.post('/test', function(req, res) {
