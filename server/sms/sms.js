@@ -244,7 +244,7 @@ exports.spamCall = function(user){
   twilio.makeCall({
     from: TWILIO_NUMBER,
     to: user.phoneNumber,
-    url: "https://get-hassled.herokuapp.com/makeCalls",
+    url: "http://demo.twilio.com/docs/voice.xml",
   }, function (err, responseData) {
     console.log(responseData);
   });
