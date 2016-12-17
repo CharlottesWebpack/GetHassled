@@ -208,9 +208,9 @@ app.get('/messageToConsole', function(req, res) {
 
 app.get('/makeCalls', function(req, res) {
   console.log(req);
-  fs.readFile('/call.xml', (err, data) => {
-    if (err) throw err;
-    console.log(data);
+  fs.readFile(__dirname + '/call.xml', (err, data) => {
+    if (err) console.error(err);
+    console.log("DATA", data);
     res.set('Content-Type', 'text/xml');
     res.send(data);
   })
