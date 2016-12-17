@@ -6,7 +6,8 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var port = process.env.PORT || 8000;
 var app = express();
-
+var nodemailer = require('nodemailer');
+var fs = require('fs');
 // configure database
 var morgan = require('morgan');
 var mongoose = require('mongoose');
@@ -15,6 +16,16 @@ mongoose.connect( process.env.DB_PATH || DB.path);
 var db = mongoose.connection;
 var User = require('./userModel.js');
 mongoose.Promise = global.Promise; // use native JS promises
+var smtpTransport = require("nodemailer-smtp-transport");
+var smtpTransport = nodemailer.createTransport(smtpTransport({
+    host : "smtp.gmail.com",
+    secureConnection : true,
+    port: 465,
+    auth : {
+        user : "gethasstled.org",
+        pass : "abeeabee"
+    }
+}));
 
 // log every request to the console
 app.use(morgan('dev'));
@@ -49,8 +60,9 @@ app.use(bodyParser.urlencoded({
 }));
 
 // authentication routes
-app.get('/auth/facebook', passport.authenticate('facebook'));
+app.get('/auth/facebook', passport.authenticate('facebook', { scope: [ 'email' ] }));
 app.get('/auth/facebook/callback', passport.authenticate('facebook', {
+  scope: [ 'email' ],
   failureRedirect: "/"
 }), (req, res) => {
     // passport attaches user information to all incoming requests
@@ -63,7 +75,7 @@ app.get('/auth/facebook/callback', passport.authenticate('facebook', {
     }
 });
 
-app.get('/auth/google', passport.authenticate('google', { scope : ['profile'] }));
+app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
 app.get('/auth/google/callback', passport.authenticate('google', {
   failureRedirect: "/"
 }), (req, res) => {
@@ -108,6 +120,7 @@ app.post('/create', function(req, res) {
     user.save()
     .then((updatedUser) => {
       res.send(updatedUser);
+      console.log(updatedUser);
       return updatedUser;
     })
     .then((updatedUser) => {
@@ -193,6 +206,17 @@ app.get('/messageToConsole', function(req, res) {
 
 });
 
+app.get('/makeCalls', function(req, res) {
+  console.log(req);
+  fs.readFile('/call.xml', (err, data) => {
+    if (err) throw err;
+    console.log(data);
+    res.set('Content-Type', 'text/xml');
+    res.send(data);
+  })
+
+})
+
 // dev testing route for manually invoking spam functions
 app.post('/test', function(req, res) {
   exports.spam();
@@ -254,10 +278,28 @@ function grade(user) {
     var progress = user.responses.reduce((acc, tuple) => tuple ? (tuple[1] === '1' ? ++acc : acc) : null, 0);
     user.grade = Math.round(progress / user.responses.length * 100);
 
+    if (user.grade < 40) {
+      var mailOptions = {
+        from : "gethasstled.org@gmail.com",
+        to : user.email,
+        subject : "Grade Less < 40",
+        text : "Grade Less"
+      }
+      console.log(mailOptions);
+      smtpTransport.sendMail(mailOptions, function(error, response){
+        if(error){
+          console.log(error);
+        } else{
+          console.log("Message sent");
+        }
+      });
+    }
+
     // update database entry
     User.update({_id: user._id}, {grade: user.grade}, err => err ? console.error(err) : null);
   }
 }
+
 
 app.post('/users/delete', function(req, res){
     var userId = req.user._id;

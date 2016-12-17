@@ -219,8 +219,8 @@ exports.getAllMessages = function() {
 exports.spamCall = function(){
 
   twilio.makeCall({
-    from: '+14152003022',
-    to: '+16468318760',
+    from: TWILIO_NUMBER,
+    to: '+14159102047',
     url: "http://demo.twilio.com/docs/voice.xml",
   }, function (err, responseData) {
     console.log(responseData);
