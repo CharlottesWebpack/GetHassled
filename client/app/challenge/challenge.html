@@ -1,0 +1,36 @@
+<div ng-model='user' class="container">
+  <h1>Check out your challeneges</h1>
+  <div class="row">
+    <div class="form-group row">
+      <form ng-submit="addChallenge()"> 
+        <div class="col-md-8">
+          <input ng-model="newChallenge.challengeGoal" type="text" required> Your challenge goal<br><br>
+          <input ng-model="newChallenge.challenger1PhoneNumber" phone-input type="text" pattern="^(?:\(\d{3}\)|\d{3})[- ]?\d{3}[- ]?\d{4}$" required> Your phone number<br><br>
+          <input ng-model="newChallenge.challenger2Name" type="text" required> Your challenger's name<br><br>
+          <input ng-model="newChallenge.challenger2PhoneNumber" phone-input type="text" pattern="^(?:\(\d{3}\)|\d{3})[- ]?\d{3}[- ]?\d{4}$" required>Your challenger's phone number<br><br>
+        </div>
+        <button class="btn btn-primary btn-block">Add Challenge</button>
+      </form>
+    </div>
+  </div>
+  <hr/>
+  <div class="row">
+    <div ng-repeat="challenge in challenges.data">
+      <div class="col-md-4 col-md-offset-4">
+        <div>
+          <h3 class="buddyName">{{challenge.challengeGoal}}</h3>
+        </div>
+        <div>
+          <div>
+            <strong>Challenger 1: </strong><span>{{challenge.challenger1}}</span>
+          </div>
+          <div>
+            <strong>Challenger 2: </strong><span>{{challenge.challenger2}}</span>
+          </div>
+        </div>
+        <hr/>
+      </div>
+      <!-- <span>{{challenge.challengeGoal}} | {{challenge.chalenger1}} | {{challenge.challenger2}}</span> -->
+    </div>
+  </div>
+</div>

@@ -24,6 +24,30 @@ exports.sendWelcome = function(userPhoneNumber, mode) {
     }
   });
 };
+
+exports.challengeNotification = function(userPhoneNumber1, userPhoneNumber2, challenger1Name, challenger2Name, challengeGoal) {
+  twilio.sendMessage({
+    to: `+1${userPhoneNumber1}`, // Any number Twilio can deliver to
+    from: TWILIO_NUMBER, // A number you bought from Twilio and can use for outbound communication
+    body: `You challenged your friend ${challenger2Name} to ${challengeGoal} You'll get a daily text from hassle to check in on your progress. If you loose we'll spam you for five days ` // body of the SMS message
+
+  }, function(err, responseData) { //this function is executed when a response is received from Twilio
+    if (!err) { // "err" is an error received during the request, if any
+      console.log(responseData.body); // outputs "word to your mother."
+    }
+  });
+  twilio.sendMessage({
+    to: `+1${userPhoneNumber2}`, // Any number Twilio can deliver to
+    from: TWILIO_NUMBER, // A number you bought from Twilio and can use for outbound communication
+    body: `Your friend ${challenger1Name} challenged you to ${challengeGoal}. You'll get a daily text from hassle to check in on your progress. If you loose we'll spam you for five days. ` // body of the SMS message
+
+  }, function(err, responseData) { //this function is executed when a response is received from Twilio
+    if (!err) { // "err" is an error received during the request, if any
+      console.log(responseData.body); // outputs "word to your mother."
+    }
+  });
+};
+
 //==========notify the buddy about their friend setting a goal===========//
 exports.notifyBuddy = function(buddyPhoneNumber, userName, userGoal) {
   twilio.sendMessage({
