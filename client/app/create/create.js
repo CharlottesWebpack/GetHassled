@@ -14,13 +14,13 @@ angular.module("app.create", [])
   })
   .error((err) => console.error(err));
 
-  $scope.goalLength = [
+  $scope.goalLengthOptions = [
     {value: (7*24*60*60*1000), label:'One week'},
     {value: (14*24*60*60*1000), label:'Two weeks'}, 
     {value: (4*7*24*60*60*1000) ,label:'One month'}, 
     {value: (3*4*7*24*60*60*1000), label:'Three months'}
   ];
-
+  
 
   $scope.addUser = function() {
     $scope.user.dateGoalCreated = new Date();
