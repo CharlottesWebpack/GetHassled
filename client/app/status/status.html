@@ -3,7 +3,10 @@
     <h1 ng-model="user.name">{{user.name}}</h1>
 
     <br />
-    <h3 ng-model="user.goal"><strong>goal:</strong> {{user.goal}}</h3>
+    <div class="row">
+      <h3 class="col-sm-6" ng-model="user.goal"><strong>goal:</strong> {{user.goal}}</h3>
+      <h3 class="col-sm-6"><strong>due date: </strong>{{countdownToGoal}}</h3>
+    </div>
     <hr />
 
     <div>
