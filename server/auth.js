@@ -29,7 +29,7 @@ module.exports = function(passport) {
     clientID: process.env.CLIENT_ID || Keys.facebook.clientID,
     clientSecret: process.env.CLIENT_SECRET || Keys.facebook.clientSecret,
     callbackURL: process.env.CALLBACK_URL || Keys.facebook.callbackURL,
-    profileFields: ['id', 'emails', 'displayName']
+    profileFields: ['id', 'email', 'gender', 'link', 'locale', 'displayName', 'timezone', 'updated_time', 'verified']
   },
   // facebook will send back the token and profile info
   function(token, refreshToken, profile, done) {
