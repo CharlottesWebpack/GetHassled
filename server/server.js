@@ -271,8 +271,8 @@ function grade(user) {
       var mailOptions = {
         from : "gethasstled.org@gmail.com",
         to : user.email,
-        subject : "Grade Less < 40",
-        text : "Grade Less"
+        subject : "Get it together",
+        text : "You're not making progress on your goal. Get it together and start working harder."
       }
       console.log(mailOptions);
       smtpTransport.sendMail(mailOptions, function(error, response){
