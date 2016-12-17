@@ -42,7 +42,6 @@ module.exports = function(passport) {
           // pass user back to passport if found
           return done(null, user);
         } else {
-          console.log('this is the profile', profile)
           // create new user if none is found
           var newUser = new User();
           newUser.token = token;
