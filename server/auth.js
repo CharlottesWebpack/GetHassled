@@ -29,7 +29,7 @@ module.exports = function(passport) {
     clientID: process.env.CLIENT_ID || Keys.facebook.clientID,
     clientSecret: process.env.CLIENT_SECRET || Keys.facebook.clientSecret,
     callbackURL: process.env.CALLBACK_URL || Keys.facebook.callbackURL,
-    profileFields: ['id', 'email', 'gender', 'link', 'locale', 'name', 'timezone', 'updated_time', 'verified']
+    profileFields: ['id', 'email', 'displayName', 'updated_time', 'verified']
   },
   // facebook will send back the token and profile info
   function(token, refreshToken, profile, done) {
@@ -47,7 +47,11 @@ module.exports = function(passport) {
           newUser.token = token;
           newUser.id = profile.id;
           newUser.name = profile.displayName;
-          newUser.email = profile.emails[0].value || null;
+          if(profile.emails) {
+            newUser.email = profile.emails[0].value;
+          } else {
+            newUser.email = null;
+          }
           // pass new user back to passport after saving to database
           newUser.save((err) => err ? done(err) : done(null, newUser));
         }
