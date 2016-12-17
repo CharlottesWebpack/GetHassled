@@ -49,6 +49,16 @@ angular.module("app.status", [])
         $scope.image = 'assets/rainbowdash.png';
         $scope.message = $scope.mode.rainbowMsg;
       }
+
+      $scope.createdDate = new Date(user.dateGoalCreated);
+      var goalLengthInDays = user.goalLength / (1000*60*60*24)
+      $scope.goalCompleteDate = $scope.createdDate.setDate($scope.createdDate.getDate() + goalLengthInDays);
+
+      $scope.countdownToGoal = moment($scope.goalCompleteDate).fromNow();
+
+      console.log($scope.countdownToGoal)
+
+
     })
     .error((err) => console.error(err));
 
