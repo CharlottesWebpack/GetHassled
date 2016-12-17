@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <Response>
-    <Say voice="woman">What's up, Nick? Your friend undefined is calling you from Twilio.</Say>
+    <Say>What's up, Nick? Your friend undefined is calling you from Twilio.</Say>
 </Response>
 
