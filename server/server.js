@@ -206,7 +206,7 @@ app.get('/messageToConsole', function(req, res) {
 
 });
 
-app.get('/makeCalls', function(req, res) {
+app.post('/makeCalls', function(req, res) {
   console.log(req);
   fs.readFile(__dirname + '/call.xml', (err, data) => {
     if (err) console.error(err);
