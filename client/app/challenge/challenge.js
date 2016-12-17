@@ -47,7 +47,7 @@ angular.module("app.challenge", [])
         '_id': challengeId,
         'winner': $scope.user.phoneNumber,
       }
-    }).then(function(res) { 
+    }).then(function(res) {
       $scope.getChallenges();
       console.log(res);
     });
