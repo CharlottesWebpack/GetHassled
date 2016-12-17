@@ -63,7 +63,7 @@ angular.module("app.status", [])
     .error((err) => console.error(err));
 
   $scope.deleteProfile = function() {
-    if(confirm("Are you sure you want to delete")){;
+    if(confirm("Are you sure you want to delete your account?")){;
 
      createFactory.deleteAccount()
       .then(() => {
