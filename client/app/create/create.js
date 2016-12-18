@@ -9,18 +9,22 @@ angular.module("app.create", [])
   $scope.user = {};
   $http.get('/user')
   .success((user) => {
-    $scope.mode = createFactory[user.mode];
-    $scope.user = user;
+    if (!user) {
+      $location.path('/');
+    } else {
+      $scope.mode = createFactory[user.mode];
+      $scope.user = user;
+    }
   })
   .error((err) => console.error(err));
 
   $scope.goalLengthOptions = [
     {value: (7*24*60*60*1000), label:'One week'},
-    {value: (14*24*60*60*1000), label:'Two weeks'}, 
-    {value: (4*7*24*60*60*1000) ,label:'One month'}, 
+    {value: (14*24*60*60*1000), label:'Two weeks'},
+    {value: (4*7*24*60*60*1000) ,label:'One month'},
     {value: (3*4*7*24*60*60*1000), label:'Three months'}
   ];
-  
+
 
   $scope.addUser = function() {
     $scope.user.dateGoalCreated = new Date();
