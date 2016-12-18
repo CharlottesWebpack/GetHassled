@@ -1,15 +1,15 @@
 <div ng-model='user' class="container">
   <h1>Check out your challeneges</h1>
   <div class="row">
-    <div class="form-group row">
-      <form ng-submit="addChallenge()"> 
-        <div class="col-md-8">
+    <div class="form-group col-md-12">
+      <form ng-submit="addChallenge()">
+        <div class="col-md-offset-4">
           <input ng-model="newChallenge.challengeGoal" type="text" required> Your challenge goal<br><br>
           <input ng-model="newChallenge.challenger1PhoneNumber" phone-input type="text" pattern="^(?:\(\d{3}\)|\d{3})[- ]?\d{3}[- ]?\d{4}$" required> Your phone number<br><br>
           <input ng-model="newChallenge.challenger2Name" type="text" required> Your challenger's name<br><br>
           <input ng-model="newChallenge.challenger2PhoneNumber" phone-input type="text" pattern="^(?:\(\d{3}\)|\d{3})[- ]?\d{3}[- ]?\d{4}$" required>Your challenger's phone number<br><br>
         </div>
-        <button class="btn btn-primary btn-block">Add Challenge</button>
+        <button class="btn btn-primary col-md-offset-4">Add Challenge</button>
       </form>
     </div>
   </div>
@@ -22,15 +22,15 @@
         </div>
         <div>
           <div>
-            <strong>Challenger 1: </strong><span>{{challenge.challenger1}}</span>
+            <strong>Challenger 1: </strong><span>{{challenge.challenger1.name}}</span>
           </div>
           <div>
-            <strong>Challenger 2: </strong><span>{{challenge.challenger2}}</span>
+            <strong>Challenger 2: </strong><span>{{challenge.challenger2.name}}</span>
           </div>
+          <button ng-click="completeChallenge(challenge._id)" class="btn btn-primary btn-block">Complete Goal</button>
         </div>
         <hr/>
       </div>
-      <!-- <span>{{challenge.challengeGoal}} | {{challenge.chalenger1}} | {{challenge.challenger2}}</span> -->
     </div>
   </div>
 </div>

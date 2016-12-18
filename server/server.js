@@ -193,6 +193,24 @@ app.post('/challenge', function(req, res) {
   twilioService.challengeNotification(challenger1Num, challenger2Num, challenger1Name, challenger2Name, challengeGoal);
 });
 
+app.post('/deleteChallenge', function(req, res) {
+  // console.log(req.body);
+  var winnerPhoneNumber = req.body.winner;
+  var loserPhoneNumer;
+  Challenge.findById(req.body._id)
+  .populate('challenger1 challenger2')
+  .then(function(challenge) {
+    if(challenge.challenger1.phoneNumber === winnerPhoneNumber) {
+      loserPhoneNumer = challenge.challenger2.phoneNumber;
+    }else {
+      loserPhoneNumer = challenge.challenger1.phoneNumber;
+    }
+    twilioService.endChallengeNotification(winnerPhoneNumber, loserPhoneNumer, challenge.challengeGoal);
+    challenge.remove();
+  });
+  res.status(200).send('your awesome');
+});
+
 // goal completion routes
 app.post('/finish', function(req, res) {
   User.findById(req.user._id, function(err, user) {

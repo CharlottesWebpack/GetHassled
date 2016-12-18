@@ -38,4 +38,18 @@ angular.module("app.challenge", [])
       console.log('this is an err from addChallenge: ', err);
     });
   };
+
+  $scope.completeChallenge = function(challengeId) {
+    $http({
+      method: 'POST',
+      url: '/deleteChallenge',
+      data: {
+        '_id': challengeId,
+        'winner': $scope.user.phoneNumber,
+      }
+    }).then(function(res) { 
+      $scope.getChallenges();
+      console.log(res);
+    });
+  };
 });
