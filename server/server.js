@@ -15,6 +15,7 @@ const DB = require('./dbConfig.js');
 mongoose.connect( process.env.DB_PATH || DB.path);
 var db = mongoose.connection;
 var User = require('./userModel.js');
+var Challenge = require('./challengeModel.js');
 mongoose.Promise = global.Promise; // use native JS promises
 var smtpTransport = require("nodemailer-smtp-transport");
 var smtpTransport = nodemailer.createTransport(smtpTransport({
@@ -78,7 +79,7 @@ app.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'e
 app.get('/auth/google/callback', passport.authenticate('google', {
   failureRedirect: "/"
 }), (req, res) => {
-    console.log("request google callback", req.user)
+    console.log("request google callback", req.user);
     // passport attaches user information to all incoming requests
     if (!req.user.goal) {
       // if user has no goal, allow them to create one
@@ -143,6 +144,71 @@ app.post('/create', function(req, res) {
     twilioService.notifyBuddy(user.buddyPhone, user.name, user.goal);
   });
 
+});
+
+app.get('/challenge', function(req, res) {
+  var userNumber = req.user.phoneNumber;
+  Challenge.find().populate('challenger1 challenger2', 'name phoneNumber -_id')
+  .then(function(challenges) {
+    console.log(challenges);
+    res.status(200).json(challenges);
+  }).catch(function(err) {
+    console.log('this is an err: ', err);
+    res.status(400).json(err);
+  });
+});
+
+app.post('/challenge', function(req, res) {
+  console.log('this is the request body: ', req.body);
+  var challenger1Num = req.body.challenger1PhoneNumber;
+  var challenger2Num = req.body.challenger2PhoneNumber;
+  var challenger1Name = req.body.challenger1Name;
+  var challenger2Name = req.body.challenger2Name;
+  var challengeGoal = req.body.challengeGoal;
+
+  var challenger1 = User.findOne({
+    phoneNumber: challenger1Num
+  });
+
+  var challenger2 = User.findOne({
+    phoneNumber: challenger2Num
+  });
+
+  Promise.all([challenger1, challenger2])
+  .then(function(challengers) {
+    console.log('these r the challengers:', challengers);
+    Challenge.create({
+      challengeGoal: challengeGoal,
+      challenger1: challengers[0],
+      challenger2: challengers[1]
+    }).then(function(challenge) {
+      res.status(200).json(challenge);
+    }).catch(function(err) {
+      res.status(400).json(err);
+    });
+  }).catch(function(err) {
+    res.status(400).json(err);
+  });
+  twilioService.challengeNotification(challenger1Num, challenger2Num, challenger1Name, challenger2Name, challengeGoal);
+});
+
+app.post('/deleteChallenge', function(req, res) {
+  // console.log(req.body);
+  var winnerPhoneNumber = req.body.winner;
+  var loserPhoneNumer;
+  Challenge.findById(req.body._id)
+  .populate('challenger1 challenger2')
+  .then(function(challenge) {
+    if(challenge.challenger1.phoneNumber === winnerPhoneNumber) {
+      loserPhoneNumer = challenge.challenger2.phoneNumber;
+    }else {
+      loserPhoneNumer = challenge.challenger1.phoneNumber;
+    }
+    twilioService.endChallengeNotification(winnerPhoneNumber, loserPhoneNumer, challenge.challengeGoal);
+    challenge.remove().then(function(removedChallenge) {
+      res.status(200).send('you\'re awesome');
+    });
+  });
 });
 
 // goal completion routes
@@ -211,14 +277,15 @@ app.post('/callUser', function(req, res) {
     res.set('Content-Type', 'text/xml');
     res.send(data);
   });
-})
+});
+
 app.post('/callBuddy', function(req, res) {
   fs.readFile(__dirname + '/sms/callBuddy.xml', (err, data) => {
     if (err) console.error(err);
     res.set('Content-Type', 'text/xml');
     res.send(data);
   });
-})
+});
 
 // dev testing route for manually invoking spam functions
 app.post('/test', function(req, res) {
@@ -287,7 +354,7 @@ function grade(user) {
         to : user.email,
         subject : "Get it together",
         text : "You're not making progress on your goal. Get it together and start working harder."
-      }
+      };
       console.log(mailOptions);
       smtpTransport.sendMail(mailOptions, function(error, response){
         if(error){
@@ -308,7 +375,7 @@ app.post('/users/delete', function(req, res){
     var userId = req.user._id;
     User.remove({"_id": userId}, function(err, data){
       if(err){
-        res.send(404)
+        res.send(404);
       }else {
         res.send("deleted");
       }
@@ -320,4 +387,4 @@ db.once('open', function (){
   console.log('mongo connection established');
   app.listen(port);
   console.log('Listening on port ' + port + '...');
-})
+});

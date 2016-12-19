@@ -4,7 +4,7 @@ angular.module("app.create", [])
   $scope.mode = createFactory.sensitive;
   $scope.changeMode = function(value) {
     $scope.mode = createFactory[value];
-  }
+  };
 
   $scope.user = {};
   $http.get('/user')
@@ -109,4 +109,3 @@ angular.module("app.create", [])
 
     };
 });
-

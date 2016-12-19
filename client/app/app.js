@@ -4,6 +4,7 @@ angular.module('app', [
   'app.finish',
 	'app.status',
 	'app.buddies',
+	'app.challenge',
 	'ngRoute'
 	])
 
@@ -25,6 +26,10 @@ angular.module('app', [
 	.when('/buddies', {
 		templateUrl: "app/buddies/buddies.html",
 		controller: "buddiesController"
+	})
+	.when("/challenge", {
+		templateUrl: "app/challenge/challenge.html",
+		controller: "challengeController"
 	})
   .when('/create', {
     templateUrl:"app/create/create.html",

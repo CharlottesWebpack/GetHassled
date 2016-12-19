@@ -1,12 +1,12 @@
 var mongoose = require('mongoose');
 
 // define user schema
-var userSchema = mongoose.Schema()
+var userSchema = mongoose.Schema();
 userSchema.add({
   token: String, // facebook token
   id: String, // facebook or google id
   name: String,// facebook display name
-  email:String,//email id of the user 
+  email:String,//email id of the user
   phoneNumber: String, // user phone number
   buddyName: String,  // accountability buddy name
   buddyPhone: String,  // accountability buddy phone number
@@ -18,7 +18,8 @@ userSchema.add({
   friends: [userSchema], //array of users who chose this user as their buddy
   goalLength: Number, // how often user wants to receive messages
   mode: {type: String, default: 'sensitive'},
-  dateGoalCreated: Date
+  dateGoalCreated: Date,
+  frequencyOfTexts: Number, // how often user wants to receive messages
 });
 
 module.exports = mongoose.model('user', userSchema);
