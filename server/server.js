@@ -331,6 +331,7 @@ exports.spam = function() {
           user.responses.push([Date.now(), 'new fail.']); // made changes to response array
 
 
+
         User.findOne({
           phoneNumber: user.phoneNumber
         }, function(err, updateUser) {
@@ -340,6 +341,7 @@ exports.spam = function() {
       }
     });
   });
+
 
   exports.gradeUsers();
 };
