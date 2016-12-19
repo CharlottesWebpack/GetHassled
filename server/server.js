@@ -302,6 +302,18 @@ app.post('/externaHarassmentAPI', function(req, res) {
   res.send("Piss off your friends!");
 });
 
+exports.challengeReminder = function() {
+  Challenge.find().then(function(challenges) {
+    Challenge.populate(challenges, 'challenger1 challenger2')
+    .then(function(challenges) {
+      console.log(challenges);
+      challenges.forEach(function(challenge) {
+        twilioService.challengeUpdateReminder([challenge.challenger1.phoneNumber, challenge.challenger2.phoneNumber], challenge.challengeGoal);
+      });
+    });
+  });
+};
+
 // spam routine
 exports.spam = function() {
   User.find((err, users) => {

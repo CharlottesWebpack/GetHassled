@@ -48,6 +48,21 @@ exports.challengeNotification = function(userPhoneNumber1, userPhoneNumber2, cha
   });
 };
 
+exports.challengeUpdateReminder = function(challengerPhoneNumbers, challengeGoal) {
+  challengerPhoneNumbers.forEach(function(challengerPhoneNumber) {
+    twilio.sendMessage({
+      to: `+1${challengerPhoneNumber}`, // Any number Twilio can deliver to
+      from: TWILIO_NUMBER, // A number you bought from Twilio and can use for outbound communication
+      body: `You must completed your ${challengeGoal} challenge to avoid excessive more excessive spamming such as this... ` // body of the SMS message
+
+    }, function(err, responseData) { //this function is executed when a response is received from Twilio
+      if (!err) { // "err" is an error received during the request, if any
+        console.log(responseData.body); // outputs "word to your mother."
+      }
+    });
+  });
+};
+
 exports.endChallengeNotification = function(challengeWinnerPhoneNumber, challengeLoserPhoneNumber, challengeGoal) {
   twilio.sendMessage({
     to: `+1${challengeWinnerPhoneNumber}`, // Any number Twilio can deliver to
