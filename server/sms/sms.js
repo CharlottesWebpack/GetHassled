@@ -53,7 +53,7 @@ exports.challengeUpdateReminder = function(challengerPhoneNumbers, challengeGoal
     twilio.sendMessage({
       to: `+1${challengerPhoneNumber}`, // Any number Twilio can deliver to
       from: TWILIO_NUMBER, // A number you bought from Twilio and can use for outbound communication
-      body: `You must completed your ${challengeGoal} challenge to avoid excessive more excessive spamming such as this... ` // body of the SMS message
+      body: `You must complete your ${challengeGoal} challenge to avoid more excessive spamming such as this... ` // body of the SMS message
 
     }, function(err, responseData) { //this function is executed when a response is received from Twilio
       if (!err) { // "err" is an error received during the request, if any
