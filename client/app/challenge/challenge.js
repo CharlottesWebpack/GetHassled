@@ -33,6 +33,7 @@ angular.module("app.challenge", [])
       url: '/challenge',
       data: $scope.newChallenge
     }).then(function(challenge) {
+      $scope.getChallenges();
       console.log(challenge);
     }).catch(function(err) {
       console.log('this is an err from addChallenge: ', err);

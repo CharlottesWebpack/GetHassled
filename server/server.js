@@ -147,7 +147,6 @@ app.post('/create', function(req, res) {
 });
 
 app.get('/challenge', function(req, res) {
-  console.log(req.user.phoneNumber);
   var userNumber = req.user.phoneNumber;
   Challenge.find().populate('challenger1 challenger2', 'name phoneNumber -_id')
   .then(function(challenges) {
@@ -206,9 +205,10 @@ app.post('/deleteChallenge', function(req, res) {
       loserPhoneNumer = challenge.challenger1.phoneNumber;
     }
     twilioService.endChallengeNotification(winnerPhoneNumber, loserPhoneNumer, challenge.challengeGoal);
-    challenge.remove();
+    challenge.remove().then(function(removedChallenge) {
+      res.status(200).send('you\'re awesome');
+    });
   });
-  res.status(200).send('your awesome');
 });
 
 // goal completion routes
