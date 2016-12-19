@@ -74,6 +74,7 @@ module.exports = function(passport) {
           var newUser = new User();
           newUser.id = profile.id;
           newUser.name = profile.displayName;
+          newUser.email = profile.emails[0].value;
           newUser.save((err) => err ? done(err) : done(null, newUser));
         }
       });
