@@ -5,20 +5,16 @@ angular.module("app.challenge", [])
     method: 'GET',
     url: '/user'
   }).then(function(user) {
-    console.log('this is the init get for user: ', user);
     $scope.user = user.data;
-    // $scope.newChallenge.challenger1Name = user.data.name;
   }).catch(function(err) {
     console.log(err);
   });
 
   $scope.getChallenges = function() {
-    console.log('this is getchallenges');
     $http({
       method: 'GET',
       url: '/challenge'
     }).then(function(challenges) {
-      console.log(challenges);
       $scope.challenges = challenges;
     }).catch(function(err) {
       console.log(err);
@@ -34,7 +30,6 @@ angular.module("app.challenge", [])
       data: $scope.newChallenge
     }).then(function(challenge) {
       $scope.getChallenges();
-      console.log(challenge);
     }).catch(function(err) {
       console.log('this is an err from addChallenge: ', err);
     });
@@ -51,6 +46,8 @@ angular.module("app.challenge", [])
     }).then(function(res) {
       $scope.getChallenges();
       console.log(res);
+    }).catch(function(err) {
+      console.log(err);
     });
   };
 });
